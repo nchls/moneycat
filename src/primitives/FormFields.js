@@ -37,6 +37,7 @@ export const InputField = (props) => {
 
 export const SelectField = (props) => {
 	const { id, choices, label, helpText, error, onChange, onBlur } = props;
+	choices[0].selected = true;
 	return (
 		<FormField {...props}>
 			<div className="select">
@@ -68,14 +69,12 @@ export class DateField extends React.Component {
 
 	onDateChange(date) {
 		this.setState({ date });
-		this.props.onChange(date); // Formik's callback
+		this.props.setFieldValue(this.props.id, date); // Formik's callback
 	}
 
 	onFocusChange({ focused }) {
 		this.setState({ focused });
-		if (!focused) {
-			this.props.onBlur(); // Formik's callback
-		}
+		this.props.setFieldTouched(this.props.id, true); // Formik's callback
 	}
 
 	render() {
@@ -89,7 +88,8 @@ export class DateField extends React.Component {
 			'helpText',
 			'error',
 			'isTouched',
-			'onChange',
+			'setFieldValue',
+			'setFieldTouched',
 			'onBlur'
 		].forEach((prop) => { delete datepickerProps[prop]; });
 
