@@ -74,16 +74,20 @@ class AppContainer extends React.Component {
 
 const App = () => {
     return (
-        <div className="app">
-            <Header />
-            <Route exact path="/" render={() => (
-                <Redirect to={`${urlRoot}/`} />
-            )} />
-            <Route exact path={`${urlRoot}/`} component={DashboardPage} />
-            <Route path={`${urlRoot}/debts`} component={DebtsPage} />
-            <Route path={`${urlRoot}/plan`} component={PlanPage} />
+        <section class="section">
+            <div class="container">
+                <div className="app">
+                    <Header />
+                    <Route exact path="/" render={() => (
+                        <Redirect to={`${urlRoot}/`} />
+                    )} />
+                    <Route exact path={`${urlRoot}/`} component={DashboardPage} />
+                    <Route path={`${urlRoot}/debts`} component={DebtsPage} />
+                    <Route path={`${urlRoot}/plan`} component={PlanPage} />
 
-        </div>
+                </div>
+            </div>
+        </section>
     );
 };
 
