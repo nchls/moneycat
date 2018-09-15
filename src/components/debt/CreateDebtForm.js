@@ -16,7 +16,7 @@ const debtFormValidation = {
 	interestCompounding: [ emptyValidator ]
 };
 
-const CreateDebtForm = ({ createDebt }) => {
+const CreateDebtForm = ({ handleCancel, createDebt }) => {
 	const initialValues = {
 		type: DEBT_TYPES[0],
 		interestCompounding: COMPOUNDING_TYPES[0]
@@ -27,10 +27,11 @@ const CreateDebtForm = ({ createDebt }) => {
 		values.startDate = values.startDate.format('YYYY-MM-DD');
 		createDebt(values);
 		setSubmitting(false);
+		handleCancel();
 	};
 
 	return (
-		<div className="create-debt-form">
+		<div className="card create-debt-form">
 			<Formik
 				initialValues={initialValues}
 				validate={validateCreateDebtForm}
@@ -129,9 +130,14 @@ const CreateDebtForm = ({ createDebt }) => {
 								onBlur={handleBlur}
 							/>
 
-							<button className="button is-primary" type="submit" disabled={isSubmitting}>
-								Create
-							</button>
+							<div className="buttons is-right">
+								<button className="button is-text" disabled={isSubmitting} onClick={handleCancel}>
+									Cancel
+								</button>
+								<button className="button is-primary" type="submit" disabled={isSubmitting}>
+									Create
+								</button>
+							</div>
 						</form>
 					);
 				} }

@@ -36,7 +36,7 @@ const Debt = (props) => {
 		}
 	} = props;
 	return (
-		<div className="tile is-child" onClick={ () => { !isExpanded && toggleExpand(); } }>
+		<div className="card" onClick={ () => { !isExpanded && toggleExpand(); } }>
 			<p>{ name }</p>
 			{ isExpanded && (
 				<Fragment>

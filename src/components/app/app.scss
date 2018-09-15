@@ -1,3 +1,33 @@
 *, *:before, *:after {
 	box-sizing: border-box;
 }
+
+$card-background: #fff;
+
+.app {
+	padding: 1em;
+}
+
+.cards-list {
+	display: flex;
+}
+.card {
+	background: $card-background;
+	box-shadow: 0 0 .4em rgba(0,0,0,0.3);
+	border-radius: .4em;
+
+	margin: 1em;
+	padding: 1em;
+	width: 100%;
+	min-height: 12em;
+
+	@media (min-width: 600px) {
+		width: 50%;
+	}
+	@media (min-width: 800px) {
+		width: 33.3%;
+	}
+	@media (min-width: 1100px) {
+		width: 25%;
+	}
+}

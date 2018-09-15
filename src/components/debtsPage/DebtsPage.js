@@ -13,10 +13,15 @@ class DebtsPageContainer extends React.Component {
 			isNewDebtFormShown: false
 		};
 		this.showNewDebtForm = this.showNewDebtForm.bind(this);
+		this.hideNewDebtForm = this.hideNewDebtForm.bind(this);
 	}
 
 	showNewDebtForm() {
 		this.setState({ isNewDebtFormShown: true });
+	}
+
+	hideNewDebtForm() {
+		this.setState({ isNewDebtFormShown: false });
 	}
 
 	render() {
@@ -24,30 +29,27 @@ class DebtsPageContainer extends React.Component {
 			{...this.props}
 			isNewDebtFormShown={this.state.isNewDebtFormShown}
 			showNewDebtForm={this.showNewDebtForm}
+			hideNewDebtForm={this.hideNewDebtForm}
 		/>
 	}
 }
 
-const DebtsPage = ({ debts, createDebt, isNewDebtFormShown, showNewDebtForm }) => {
+const DebtsPage = ({ debts, createDebt, isNewDebtFormShown, showNewDebtForm, hideNewDebtForm }) => {
 	return (
-		<div>
-			<div className="tile is-ancestor">
-				<div className="tile is-parent">
-					{ Object.entries(debts).map(([id, debt]) => {
-						return (
-							<Debt debt={debt} key={id} />
-						);
-					}) }
-				</div>
-			</div>
+		<div className="debts-page cards-list">
+			{ Object.entries(debts).map(([id, debt]) => {
+				return (
+					<Debt debt={debt} key={id} />
+				);
+			}) }
 			{ !isNewDebtFormShown ? (
-				<p>
+				<div className="card">
 					<button className="button is-primary" onClick={showNewDebtForm}>
 						Create a debt
 					</button>
-				</p>
+				</div>
 			) : (
-				<CreateDebtForm />
+				<CreateDebtForm handleCancel={hideNewDebtForm} />
 			) }
 		</div>
 	);
