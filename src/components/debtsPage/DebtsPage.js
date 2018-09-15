@@ -3,19 +3,32 @@ import { connect } from 'react-redux';
 
 import Debt from '../debt/Debt';
 import { createDebt } from '../debt/debtModule';
+import CreateDebtForm from '../debt/CreateDebtForm';
 
 
-const DebtsPage = ({ debts, createDebt }) => {
-	const debtProps = {
-		id: Date.now(),
-		name: 'Eternal Mortgage',
-		type: 'mortgage',
-		balance: 247000.42,
-		startDate: '2017-01-01',
-		minimumPayment: 1200.88,
-		interestRate: 4.25,
-		interestCompounding: 'compound'
-	};
+class DebtsPageContainer extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			isNewDebtFormShown: false
+		};
+		this.showNewDebtForm = this.showNewDebtForm.bind(this);
+	}
+
+	showNewDebtForm() {
+		this.setState({ isNewDebtFormShown: true });
+	}
+
+	render() {
+		return <DebtsPage
+			{...this.props}
+			isNewDebtFormShown={this.state.isNewDebtFormShown}
+			showNewDebtForm={this.showNewDebtForm}
+		/>
+	}
+}
+
+const DebtsPage = ({ debts, createDebt, isNewDebtFormShown, showNewDebtForm }) => {
 	return (
 		<div>
 			<div className="tile is-ancestor">
@@ -27,11 +40,15 @@ const DebtsPage = ({ debts, createDebt }) => {
 					}) }
 				</div>
 			</div>
-			<p>
-				<button className="button is-primary" onClick={() => createDebt(debtProps)}>
-					Create a debt
-				</button>
-			</p>
+			{ !isNewDebtFormShown ? (
+				<p>
+					<button className="button is-primary" onClick={showNewDebtForm}>
+						Create a debt
+					</button>
+				</p>
+			) : (
+				<CreateDebtForm />
+			) }
 		</div>
 	);
 }
@@ -48,4 +65,4 @@ const mapDispatchToProps = (dispatch) => {
 	};
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(DebtsPage);
+export default connect(mapStateToProps, mapDispatchToProps)(DebtsPageContainer);
