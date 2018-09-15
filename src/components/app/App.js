@@ -1,29 +1,43 @@
 import React from 'react';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import './app.scss';
 
+import { initialState, appReducer } from './appModule';
 import Nav from '../nav/Nav';
 import DashboardPage from '../dashboardPage/DashboardPage';
 import DebtsPage from '../debtsPage/DebtsPage';
 import PlanPage from '../planPage/PlanPage';
 
+
+const store = createStore(
+	appReducer,
+	initialState,
+	window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
+
 class AppContainer extends React.Component {
 	render() {
-		return <App {...this.props}/>;
+		return (
+			<Provider store={store}>
+				<Router>
+					<App {...this.props}/>
+				</Router>
+			</Provider>
+		);
 	}
 };
 
 const App = () => {
 	return (
-		<Router>
-			<div className="app">
-				<Nav />
-				<Route exact path="/" component={DashboardPage} />
-				<Route path="/debts" component={DebtsPage} />
-				<Route path="/plan" component={PlanPage} />
-			</div>
-		</Router>
+		<div className="app">
+			<Nav />
+			<Route exact path="/" component={DashboardPage} />
+			<Route path="/debts" component={DebtsPage} />
+			<Route path="/plan" component={PlanPage} />
+		</div>
 	);
 };
 
