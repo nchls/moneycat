@@ -70,7 +70,7 @@ const BarChart = ({ data, keys }) => {
             "tickPadding": 5,
             "tickRotation": 0,
             "legend": "time",
-            "legendPosition": "center",
+            "legendPosition": "middle",
             "legendOffset": 36
         }}
         axisLeft={{
@@ -79,7 +79,7 @@ const BarChart = ({ data, keys }) => {
             "tickPadding": 5,
             "tickRotation": 0,
             "legend": "debt",
-            "legendPosition": "center",
+            "legendPosition": "middle",
             "legendOffset": -40
         }}
         labelSkipWidth={12}

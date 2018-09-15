@@ -74,8 +74,8 @@ class AppContainer extends React.Component {
 
 const App = () => {
     return (
-        <section class="section">
-            <div class="container">
+        <section className="section">
+            <div className="container">
                     <div className="app">
                         <Header />
                         <Route exact path="/" render={() => (

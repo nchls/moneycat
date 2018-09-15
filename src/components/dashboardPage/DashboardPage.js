@@ -140,24 +140,62 @@ const data = {
             payment: 5,
             isManual: true
         },
+    },
+    '2019-04-16': {
+        'DEBT4': {
+            principalBalance: 6000,
+            accruedInterest: 2,
+            payment: 5,
+            isManual: true
+        },
+    },
+    '2019-04-17': {
+        'DEBT4': {
+            principalBalance: 6000,
+            accruedInterest: 2,
+            payment: 5,
+            isManual: true
+        },
     }
 };
 
 const DashboardPage = props => {
     // TODO: Pull data from redux store
+    // TODO: This is bonkers. Definitely going over this data more than necessary.
     const allDebts = {};
-    const dataArray = Object.keys(data).sort().map(t => {
+    const dataObj = {};
+    Object.keys(data).sort().map(t => {
+        // This code is shitty. The overall idea is to transform and squash the ledger by
+        // turning it into an array of objects, grouped (and indexed) by month, containing all of
+        // the debt balances for that month. It also gathers all of the debt ids in the ledger.
+        // All of this to get it onto a state to send to the chart
         const debts = {};
         Object.keys(data[t]).forEach(d => allDebts[d] = true);
         Object.keys(data[t]).forEach(d => debts[d] = data[t][d].principalBalance);
         const dateParts = t.match(/(\d{4})-(\d{2})-(\d{2})/);
-        return {
-            time: `${dateParts[1]}-${dateParts[2]}`,
-            ...debts
-        };
+        const time = `${dateParts[1]}-${dateParts[2]}`;
+        if (!(time in dataObj)) {
+            dataObj[time] = {};
+        }
+        for (const debt in debts) {
+            if (debt in dataObj[time]) {
+                dataObj[time][debt] += debts[debt];
+            } else {
+                dataObj[time][debt] = debts[debt];
+            }
+        }
     });
+    const dataArray = Object.keys(dataObj).sort().map(t => ({
+        time: t,
+        ...dataObj[t]
+    }));
 
     // N.B. BarChart's parent component must have a height defined, else it won't render ಠ_ಠ
+    // N.B. Nivo sucks at making legends. It only looks at the first data item to make the legend...
+    //      And even then, it doesn't consider items that are too small, so you can't just push all
+    //      the debtIds into the first item (that aren't already there) with zero balances
+    // N.B. This chart isn't really a time series. If you omit a month from the data passed in,
+    //      the chart won't render that month at all
     return (
         // The ticket said we need a spinner, so this is ready to go when everything gets wired up
         <Spinner isLoading={false}>
