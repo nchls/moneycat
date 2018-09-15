@@ -1,5 +1,6 @@
 import React from 'react';
 import BarChart from './BarChart';
+import Spinner from '../../primitives/Spinner'
 
 const data = {
     '2018-09-15': {
@@ -157,15 +158,18 @@ const DashboardPage = props => {
 
     // N.B. BarChart's parent component must have a height defined, else it won't render ಠ_ಠ
     return (
-        <div className="dashboard" style={{ height: "500px" }}>
-            <h2>Dashboard</h2>
-            <BarChart
-                data={dataArray}
-                keys={Object.keys(allDebts)}
-                width={800}
-                height={400}
-            />
-        </div >
+        // The ticket said we need a spinner, so this is ready to go when everything gets wired up
+        <Spinner isLoading={false}>
+            <div className="dashboard" style={{ height: "500px" }}>
+                <h2>Dashboard</h2>
+                <BarChart
+                    data={dataArray}
+                    keys={Object.keys(allDebts)}
+                    width={800}
+                    height={400}
+                />
+            </div >
+        </Spinner>
     );
 }
 
