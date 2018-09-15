@@ -1,30 +1,31 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import { urlRoot } from '../app/App';
 import './header.scss';
 
 const Header = () => {
 	return (
 		<header className="header">
 			<div className="header-logo">
-				<Link to="/" className="moneycat-logo">
+				<Link to={`${urlRoot}/`} className="moneycat-logo">
 					<h1>Moneycat</h1>
 				</Link>
 			</div>
 			<nav className="nav">
 				<ul className="nav-items">
 					<li>
-						<Link to="/">
+						<Link to={`${urlRoot}/`}>
 							Dashboard
 						</Link>
 					</li>
 					<li>
-						<Link to="/debts">
+						<Link to={`${urlRoot}/debts`}>
 							Debts
 						</Link>
 					</li>
 					<li>
-						<Link to="/plan">
+						<Link to={`${urlRoot}/plan`}>
 							Plan
 						</Link>
 					</li>
