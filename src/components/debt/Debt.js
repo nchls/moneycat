@@ -46,7 +46,7 @@ const Debt = (props) => {
 					<p>Minimum payment: { minimumPayment }</p>
 					<p>Interest rate: { interestRate }</p>
 					<p>Interest compounding: { interestCompounding }</p>
-					<button className="button is-text" onClick={toggleExpand}>Collapse</button>
+					<button className="button is-text" onClick={toggleExpand}>Cancel</button>
 				</Fragment>
 			) }
 		</div>
