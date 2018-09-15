@@ -1,0 +1,25 @@
+.header {
+	display: flex;
+}
+
+.header-logo {
+	a {
+		display: block;
+		padding: 1em;
+	}
+	h1 {
+		font-weight: bold;
+	}
+}
+
+.nav {
+
+}
+
+.nav-items {
+	display: flex;
+	li a {
+		display: block;
+		padding: 1em;
+	}
+}

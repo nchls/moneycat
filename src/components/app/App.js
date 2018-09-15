@@ -6,7 +6,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import './app.scss';
 
 import { initialState, appReducer } from './appModule';
-import Nav from '../nav/Nav';
+import Header from '../header/Header';
 import DashboardPage from '../dashboardPage/DashboardPage';
 import DebtsPage from '../debtsPage/DebtsPage';
 import PlanPage from '../planPage/PlanPage';
@@ -32,7 +32,7 @@ class AppContainer extends React.Component {
 const App = () => {
 	return (
 		<div className="app">
-			<Nav />
+			<Header />
 			<Route exact path="/" component={DashboardPage} />
 			<Route path="/debts" component={DebtsPage} />
 			<Route path="/plan" component={PlanPage} />
