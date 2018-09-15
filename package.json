@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack-dev-server --config webpack.config.dev.js --watch",
+    "start": "webpack-dev-server --config webpack.config.dev.js --watch --history-api-fallback",
     "build": "webpack --config webpack.config.prod.js"
   },
   "repository": {
