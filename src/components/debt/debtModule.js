@@ -37,9 +37,10 @@ export const debtReducer = (state = initialState, action) => {
 	let newState;
 	switch (action.type) {
 		case 'CREATE_DEBT':
+			const newDebtId = (Math.max(...Object.keys(state).map((id) => parseInt(id))) || 0) + 1;
 			newState = {
 				...state,
-				[action.debt.id]: action.debt
+				[newDebtId]: {...action.debt, id: newDebtId}
 			};
 			return newState;
 
@@ -48,18 +49,9 @@ export const debtReducer = (state = initialState, action) => {
     }
 };
 
-const createDebtId = (function() {
-	let id = 0;
-	const inner = () => {
-		id += 1;
-		return id;
-	}
-	return inner;
-}());
-
 export const createDebt = (debt) => {
 	return {
 		type: 'CREATE_DEBT',
-		debt: {...debt, id: createDebtId()}
+		debt: debt
 	};
 };
