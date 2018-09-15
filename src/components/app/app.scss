@@ -1,3 +1,35 @@
 *, *:before, *:after {
 	box-sizing: border-box;
 }
+
+$card-background: #fff;
+$card-margin: 1em;
+
+.app {
+	padding: 1em;
+}
+
+.cards-list {
+
+}
+.card {
+	background: $card-background;
+	box-shadow: 0 0 .4em rgba(0,0,0,0.3);
+	border-radius: .4em;
+
+	float: left;
+	margin: $card-margin;
+	padding: 1em;
+	min-height: 10em;
+
+	width: calc(100% - (#{$card-margin} * 2));
+	@media (min-width: 600px) {
+		width: calc(50% - (#{$card-margin} * 2));
+	}
+	@media (min-width: 800px) {
+		width: calc(33.3% - (#{$card-margin} * 2));
+	}
+	@media (min-width: 1100px) {
+		width: calc(25% - (#{$card-margin} * 2));
+	}
+}

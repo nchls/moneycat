@@ -48,9 +48,18 @@ export const debtReducer = (state = initialState, action) => {
     }
 };
 
+const createDebtId = (function() {
+	let id = 0;
+	const inner = () => {
+		id += 1;
+		return id;
+	}
+	return inner;
+}());
+
 export const createDebt = (debt) => {
-    return {
-        type: 'CREATE_DEBT',
-        debt: debt
-    };
+	return {
+		type: 'CREATE_DEBT',
+		debt: {...debt, id: createDebtId()}
+	};
 };
