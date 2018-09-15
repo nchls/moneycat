@@ -3,7 +3,7 @@ import BarChart from './BarChart';
 import Spinner from '../../primitives/Spinner'
 
 const data = {
-    '2018-09-15': {
+    '2018-05-15': {
         'DEBT1': {
             principalBalance: 50000,
             accruedInterest: 2,
@@ -23,7 +23,7 @@ const data = {
             isManual: true
         },
     },
-    '2018-10-15': {
+    '2018-06-15': {
         'DEBT1': {
             principalBalance: 40000,
             accruedInterest: 2,
@@ -37,7 +37,7 @@ const data = {
             isManual: true
         }
     },
-    '2018-11-15': {
+    '2018-07-15': {
         'DEBT1': {
             principalBalance: 30000,
             accruedInterest: 2,
@@ -51,7 +51,7 @@ const data = {
             isManual: true
         }
     },
-    '2018-12-15': {
+    '2018-08-15': {
         'DEBT1': {
             principalBalance: 20000,
             accruedInterest: 2,
@@ -65,7 +65,7 @@ const data = {
             isManual: true
         }
     },
-    '2019-01-15': {
+    '2018-09-15': {
         'DEBT1': {
             principalBalance: 10000,
             accruedInterest: 2,
@@ -79,7 +79,7 @@ const data = {
             isManual: true
         }
     },
-    '2019-02-15': {
+    '2018-10-15': {
         'DEBT1': {
             principalBalance: 1000,
             accruedInterest: 2,
@@ -93,7 +93,7 @@ const data = {
             isManual: true
         }
     },
-    '2019-03-15': {
+    '2018-11-15': {
         'DEBT4': {
             principalBalance: 1000,
             accruedInterest: 2,
@@ -101,7 +101,7 @@ const data = {
             isManual: true
         },
     },
-    '2019-04-15': {
+    '2018-12-15': {
         'DEBT4': {
             principalBalance: 2000,
             accruedInterest: 2,
@@ -109,7 +109,7 @@ const data = {
             isManual: true
         },
     },
-    '2019-05-15': {
+    '2019-01-15': {
         'DEBT4': {
             principalBalance: 3000,
             accruedInterest: 2,
@@ -117,7 +117,7 @@ const data = {
             isManual: true
         },
     },
-    '2019-06-15': {
+    '2019-02-15': {
         'DEBT4': {
             principalBalance: 4000,
             accruedInterest: 2,
@@ -125,7 +125,7 @@ const data = {
             isManual: true
         },
     },
-    '2019-07-15': {
+    '2019-03-15': {
         'DEBT4': {
             principalBalance: 5000,
             accruedInterest: 2,
@@ -133,7 +133,7 @@ const data = {
             isManual: true
         },
     },
-    '2019-08-15': {
+    '2019-04-15': {
         'DEBT4': {
             principalBalance: 6000,
             accruedInterest: 2,
@@ -150,8 +150,9 @@ const DashboardPage = props => {
         const debts = {};
         Object.keys(data[t]).forEach(d => allDebts[d] = true);
         Object.keys(data[t]).forEach(d => debts[d] = data[t][d].principalBalance);
+        const dateParts = t.match(/(\d{4})-(\d{2})-(\d{2})/);
         return {
-            time: t,
+            time: `${dateParts[1]}-${dateParts[2]}`,
             ...debts
         };
     });

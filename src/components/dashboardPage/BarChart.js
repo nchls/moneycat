@@ -20,6 +20,15 @@ const BarChart = ({ data, keys }) => {
                 }
                 : null
     )).filter(i => i);
+    const d = new Date();
+    const year = d.getFullYear();
+    const month = d.getMonth() + 1;
+    const now = `${year}-${month < 10 ? ('0'+month) : month}`
+    const markToday = [{
+        axis: 'x',
+        value: now,
+        lineStyle: {stroke: 'rgba(0, 0, 0, .35)', strokeWidth: 2},
+    }];
     return <ResponsiveBar
         data={data}
         keys={keys}
@@ -30,6 +39,7 @@ const BarChart = ({ data, keys }) => {
             "bottom": 50,
             "left": 60
         }}
+        markers={markToday}
         padding={0.3}
         colors="pastel1"
         colorBy="id"
