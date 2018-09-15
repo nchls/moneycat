@@ -1,26 +1,8 @@
 import { combineReducers } from 'redux';
 
+import { debtReducer } from '../debt/debtModule';
 
-export const initialState = {
-	currencyCode: 'USD',
-	isProcessing: false,
-	lastSave: undefined,
-	debts: {},
-	debtRevisions: [],
-	manualPayments: {},
-	plan: {},
-	planRevisions: [],
-	payoffDates: {},
-	ledger: {}
-};
 
-export const appReducer = (state, action) => {
-	switch (action.type) {
-		case 'CREATE_DEBT':
-			const newState = {...state};
-			newState.debts[action.debt.id] = action.debt;
-
-		default:
-			return state;
-	}
-};
+export const appReducer = combineReducers({
+	debts: debtReducer
+});

@@ -1,12 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
+import Debt from '../debt/Debt';
 import { createDebt } from '../debt/debtModule';
 
 
-const DebtsPage = ({ createDebt }) => {
+const DebtsPage = ({ debts, createDebt }) => {
 	const debtProps = {
-		id: 47,
+		id: Date.now(),
 		name: 'Eternal Mortgage',
 		type: 'mortgage',
 		balance: 247000.42,
@@ -16,7 +17,16 @@ const DebtsPage = ({ createDebt }) => {
 		interestCompounding: 'compound'
 	};
 	return (
-		<div className="debts">
+		<div>
+			<div className="tile is-ancestor">
+				<div className="tile is-parent">
+					{ Object.entries(debts).map(([id, debt]) => {
+						return (
+							<Debt debt={debt} />
+						);
+					}) }
+				</div>
+			</div>
 			<p>
 				<button className="button" onClick={() => createDebt(debtProps)}>
 					Create a debt
@@ -27,7 +37,9 @@ const DebtsPage = ({ createDebt }) => {
 }
 
 const mapStateToProps = (state) => {
-	return {};
+	return {
+		debts: state.debts
+	};
 };
 
 const mapDispatchToProps = (dispatch) => {
