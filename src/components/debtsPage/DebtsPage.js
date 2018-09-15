@@ -22,13 +22,13 @@ const DebtsPage = ({ debts, createDebt }) => {
 				<div className="tile is-parent">
 					{ Object.entries(debts).map(([id, debt]) => {
 						return (
-							<Debt debt={debt} />
+							<Debt debt={debt} key={id} />
 						);
 					}) }
 				</div>
 			</div>
 			<p>
-				<button className="button" onClick={() => createDebt(debtProps)}>
+				<button className="button is-primary" onClick={() => createDebt(debtProps)}>
 					Create a debt
 				</button>
 			</p>

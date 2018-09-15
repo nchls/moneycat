@@ -1,10 +1,10 @@
 const initialState = {};
 
 export const debtReducer = (state = initialState, action) => {
+	let newState;
 	switch (action.type) {
 		case 'CREATE_DEBT':
-			const newState = {...state};
-			newState[action.debt.id] = action.debt;
+			newState = {...state, [action.debt.id]: action.debt};
 			return newState;
 
 		default:

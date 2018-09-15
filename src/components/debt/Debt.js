@@ -1,9 +1,29 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 
 
+class DebtContainer extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			isExpanded: false
+		};
+		this.toggleExpand = this.toggleExpand.bind(this);
+	}
+
+	toggleExpand() {
+		this.setState({isExpanded: !this.state.isExpanded});
+	}
+
+	render() {
+		return <Debt {...this.props} isExpanded={this.state.isExpanded} toggleExpand={this.toggleExpand} />;
+	}
+}
+
 const Debt = (props) => {
 	const {
+		isExpanded,
+		toggleExpand,
 		debt: {
 			id,
 			name,
@@ -16,16 +36,25 @@ const Debt = (props) => {
 		}
 	} = props;
 	return (
-		<div className="tile is-child">
-			<p>Name: { name }</p>
-			<p>Type: { type }</p>
-			<p>Starting balance: { balance }</p>
-			<p>Start date: { startDate }</p>
-			<p>Minimum payment: { minimumPayment }</p>
-			<p>Interest rate: { interestRate }</p>
-			<p>Interest compounding: { interestCompounding }</p>
+		<div className="tile is-child" onClick={ () => { !isExpanded && toggleExpand(); } }>
+			<p>{ name }</p>
+			{ isExpanded && (
+				<Fragment>
+					<p>Type: { type }</p>
+					<p>Starting balance: { balance }</p>
+					<p>Start date: { startDate }</p>
+					<p>Minimum payment: { minimumPayment }</p>
+					<p>Interest rate: { interestRate }</p>
+					<p>Interest compounding: { interestCompounding }</p>
+					<button className="button is-text" onClick={toggleExpand}>Collapse</button>
+				</Fragment>
+			) }
 		</div>
 	);
 }
 
-export default Debt;
+const DebtForm = () => {
+
+};
+
+export default DebtContainer;
