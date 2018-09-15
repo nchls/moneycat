@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
+import './debtsPage.scss';
 import Debt from '../debt/Debt';
 import { createDebt } from '../debt/debtModule';
 import CreateDebtForm from '../debt/CreateDebtForm';
