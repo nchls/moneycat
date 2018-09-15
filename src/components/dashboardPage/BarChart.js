@@ -1,8 +1,27 @@
 import React from 'react';
 import { ResponsiveBar } from '@nivo/bar'
 
-const BarChart = ({data, keys}) =>
-    <ResponsiveBar
+const BarChart = ({data, keys}) => {
+    // Add some fill stylez. 
+    const phil = keys.map((k,i) => {
+        if (i%3==0) {
+            return {
+                "match": {
+                    "id": k
+                },
+                "id": "dots"
+            };
+        }
+        if (i%2==0) {
+            return {
+                "match": {
+                    "id": k
+                },
+                "id": "lines"
+            }
+        }
+    }).filter(i=>i);
+    return <ResponsiveBar
         data={data}
         keys={keys}
         indexBy="time"
@@ -60,6 +79,7 @@ const BarChart = ({data, keys}) =>
         animate={true}
         motionStiffness={90}
         motionDamping={15}
+        fill={phil}
         legends={[
             {
                 "dataFrom": "keys",
@@ -85,5 +105,6 @@ const BarChart = ({data, keys}) =>
             }
         ]}
     />;
+};
 
 export default BarChart;

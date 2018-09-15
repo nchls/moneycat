@@ -14,6 +14,12 @@ const data = {
             accruedInterest: 2,
             payment: 5,
             isManual: true
+        },
+        'DEBT3': {
+            principalBalance: 5000,
+            accruedInterest: 2,
+            payment: 5,
+            isManual: true
         }
     },
     '2018-10-15': {
@@ -90,8 +96,10 @@ const data = {
 
 const DashboardPage = props => {
     // TODO: Pull data from redux store
-    const debts = {};
+    const allDebts = {};
     const dataArray = Object.keys(data).sort().map(t => {
+        const debts = {};
+        Object.keys(data[t]).forEach(d => allDebts[d] = true);
         Object.keys(data[t]).forEach(d => debts[d] = data[t][d].principalBalance);
         return {
             time: t,
@@ -104,7 +112,7 @@ const DashboardPage = props => {
             <h2>Dashboard</h2>
             <BarChart
                 data={dataArray}
-                keys={Object.keys(debts)}
+                keys={Object.keys(allDebts)}
                 width={800}
                 height={400}
             />
