@@ -1,26 +1,25 @@
 import React from 'react';
 import { ResponsiveBar } from '@nivo/bar'
 
-const BarChart = ({data, keys}) => {
-    // Add some fill stylez. 
-    const phil = keys.map((k,i) => {
-        if (i%3==0) {
-            return {
+const BarChart = ({ data, keys }) => {
+    // Add some fill stylez.
+    const phil = keys.map((k, i) => (
+        i % 3 == 0
+            ? {
                 "match": {
                     "id": k
                 },
                 "id": "dots"
-            };
-        }
-        if (i%2==0) {
-            return {
-                "match": {
-                    "id": k
-                },
-                "id": "lines"
             }
-        }
-    }).filter(i=>i);
+            : i % 2 == 0
+                ? {
+                    "match": {
+                        "id": k
+                    },
+                    "id": "lines"
+                }
+                : null
+    )).filter(i => i);
     return <ResponsiveBar
         data={data}
         keys={keys}

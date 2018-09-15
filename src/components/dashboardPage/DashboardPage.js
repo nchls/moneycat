@@ -20,7 +20,7 @@ const data = {
             accruedInterest: 2,
             payment: 5,
             isManual: true
-        }
+        },
     },
     '2018-10-15': {
         'DEBT1': {
@@ -80,17 +80,65 @@ const data = {
     },
     '2019-02-15': {
         'DEBT1': {
-            principalBalance: 0,
+            principalBalance: 1000,
             accruedInterest: 2,
             payment: 5,
             isManual: true
         },
         'DEBT2': {
-            principalBalance: 0,
+            principalBalance: 100,
             accruedInterest: 2,
             payment: 5,
             isManual: true
         }
+    },
+    '2019-03-15': {
+        'DEBT4': {
+            principalBalance: 1000,
+            accruedInterest: 2,
+            payment: 5,
+            isManual: true
+        },
+    },
+    '2019-04-15': {
+        'DEBT4': {
+            principalBalance: 2000,
+            accruedInterest: 2,
+            payment: 5,
+            isManual: true
+        },
+    },
+    '2019-05-15': {
+        'DEBT4': {
+            principalBalance: 3000,
+            accruedInterest: 2,
+            payment: 5,
+            isManual: true
+        },
+    },
+    '2019-06-15': {
+        'DEBT4': {
+            principalBalance: 4000,
+            accruedInterest: 2,
+            payment: 5,
+            isManual: true
+        },
+    },
+    '2019-07-15': {
+        'DEBT4': {
+            principalBalance: 5000,
+            accruedInterest: 2,
+            payment: 5,
+            isManual: true
+        },
+    },
+    '2019-08-15': {
+        'DEBT4': {
+            principalBalance: 6000,
+            accruedInterest: 2,
+            payment: 5,
+            isManual: true
+        },
     }
 };
 
@@ -106,9 +154,10 @@ const DashboardPage = props => {
             ...debts
         };
     });
+
     // N.B. BarChart's parent component must have a height defined, else it won't render ಠ_ಠ
     return (
-        <div className="dashboard" style={{height: "500px"}}>
+        <div className="dashboard" style={{ height: "500px" }}>
             <h2>Dashboard</h2>
             <BarChart
                 data={dataArray}
