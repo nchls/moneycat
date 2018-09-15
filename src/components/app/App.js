@@ -52,7 +52,13 @@ const enhancers = composeEnhancers(
     applyMiddleware(...middlewares)
 );
 
-const store = createStore(appReducer, getStoreFromLocalStorage(), enhancers);
+const storedStore = getStoreFromLocalStorage();
+
+const storeArgs = storedStore
+    ? [appReducer, storedStore, enhancers]
+    : [appReducer, enhancers];
+
+const store = createStore(...storeArgs);
 
 class AppContainer extends React.Component {
     render() {
