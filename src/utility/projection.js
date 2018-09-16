@@ -8,3 +8,10 @@ export const orderDebtsForPayoff = (debts) => {
 		return intRateDiff;
 	});
 };
+
+export const generateProjection = ({ debts, debtRevisions, manualPayments, plan, planRevisions }) => {
+	return {
+		ledger: {},
+		payoffDates: {}
+	};
+};
