@@ -35,6 +35,9 @@ a:visited {
 	box-shadow: 0 0 .4em rgba(0,0,0,0.3);
 	border-radius: .4em;
 	cursor: pointer;
+	&.is-expanded {
+		cursor: inherit;
+	}
 
 	margin: $card-margin;
 	padding: 1em;

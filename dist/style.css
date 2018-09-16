@@ -878,6 +878,8 @@ a:visited {
   padding: 1em;
   min-height: 8em;
   width: calc(100% - (1em * 2)); }
+  .card.is-expanded {
+    cursor: inherit; }
   @media (min-width: 640px) {
     .card {
       width: calc(50% - (1em * 2)); } }
@@ -901,6 +903,29 @@ a:visited {
 
 .is-inactive {
   opacity: .75; }
+
+.debt-info {
+  border: solid 1px #ccc;
+  padding: .5em;
+  font-size: .85em; }
+  .debt-info .info-header {
+    font-weight: bold; }
+  .debt-info ul {
+    margin: 0 0 .5em 0; }
+  .debt-info .revisions-header {
+    font-weight: bold; }
+  .debt-info .revision-header {
+    font-weight: bold;
+    background: transparent;
+    display: block;
+    width: 100%;
+    text-align: left;
+    color: #4a4a4a;
+    padding: .3em 0;
+    border: 0;
+    cursor: pointer; }
+  .debt-info ol li {
+    list-style: none; }
 .plan-page {
   padding: 1em; }
   .plan-page p {

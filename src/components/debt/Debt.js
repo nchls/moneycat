@@ -13,18 +13,22 @@ class DebtContainer extends React.Component {
 		this.state = {
 			isExpanded: false,
 			isEditFormOpen: false,
-			isReviseFormOpen: false
+			isReviseFormOpen: false,
+			expandedRevision: undefined
 		};
 		this.toggleExpand = this.toggleExpand.bind(this);
 		this.openEditForm = this.openEditForm.bind(this);
 		this.openReviseForm = this.openReviseForm.bind(this);
+		this.toggleRevision = this.toggleRevision.bind(this);
+		this.collapseRevision = this.collapseRevision.bind(this);
 	}
 
 	toggleExpand() {
 		this.setState({
 			isExpanded: !this.state.isExpanded,
 			isEditFormOpen: false,
-			isReviseFormOpen: false
+			isReviseFormOpen: false,
+			expandedRevision: undefined
 		});
 	}
 
@@ -34,6 +38,18 @@ class DebtContainer extends React.Component {
 
 	openReviseForm() {
 		this.setState({isReviseFormOpen: true});
+	}
+
+	toggleRevision(ymd) {
+		if (this.state.expandedRevision === ymd) {
+			this.setState({expandedRevision: undefined});
+		} else {
+			this.setState({expandedRevision: ymd});
+		}
+	}
+
+	collapseRevision() {
+		this.setState({expandedRevision: undefined});
 	}
 
 	render() {
@@ -46,6 +62,9 @@ class DebtContainer extends React.Component {
 				openEditForm={this.openEditForm}
 				isReviseFormOpen={this.state.isReviseFormOpen}
 				openReviseForm={this.openReviseForm}
+				expandedRevision={this.state.expandedRevision}
+				toggleRevision={this.toggleRevision}
+				collapseRevision={this.collapseRevision}
 			/>
 		);
 	}
@@ -59,6 +78,9 @@ const Debt = (props) => {
 		isEditFormOpen,
 		openReviseForm,
 		isReviseFormOpen,
+		expandedRevision,
+		toggleRevision,
+		collapseRevision,
 		debt: {
 			id,
 			name,
@@ -70,6 +92,7 @@ const Debt = (props) => {
 			interestRate,
 			interestCompounding
 		},
+		debtRevisions,
 		projection: {
 			ledger,
 			isProcessing
@@ -92,8 +115,16 @@ const Debt = (props) => {
 
 	const isDebtInactive = (!isProcessing && userHasPlan && debtBalance === 0);
 
+	const thisDebtRevisions = debtRevisions.filter((revision) => revision.debtId === id);
+	thisDebtRevisions.sort((a, b) => {
+		if (a.effectiveDate < b.effectiveDate) {
+			return -1;
+		}
+		return 1;
+	});
+
 	return (
-		<div className={`card${(isDebtInactive ? ' is-inactive' : '')}`} onClick={ () => { !isExpanded && toggleExpand(); } }>
+		<div className={`card${(isDebtInactive ? ' is-inactive' : '')}${(isExpanded ? ' is-expanded' : '')}`} onClick={ () => { !isExpanded && toggleExpand(); } }>
 			<h3 className="title is-5">{ name }</h3>
 			{ (userHasPlan && !isEditFormOpen && !isReviseFormOpen) && (
 				<div className="debt-balance">
@@ -102,6 +133,52 @@ const Debt = (props) => {
 			) }
 			{ isExpanded && (
 				<Fragment>
+					{ !(isEditFormOpen || isReviseFormOpen) && (
+						<div className="debt-info">
+							<div className="base-info">
+								<div className="info-header">Base info</div>
+								<ul>
+									<li>Type: {type}</li>
+									<li>Starting balance: ${balance}</li>
+									<li>Start date: {startDate}</li>
+									<li>Payment day: {paymentDay}</li>
+									<li>Minimum payment: ${minimumPayment}</li>
+									<li>Interest rate: {interestRate}%</li>
+									<li>Interest compounding: {interestCompounding}</li>
+								</ul>
+							</div>
+							{ thisDebtRevisions.length > 0 && (
+								<Fragment>
+									<div className="revisions-header">Revisions:</div>
+									<ol>
+										{ thisDebtRevisions.map((revision) => {
+											return (
+												<li key={revision.effectiveDate}>
+													<div className="revision-info">
+														<button
+															className="revision-header"
+															onClick={() => toggleRevision(revision.effectiveDate)}
+														>
+															{revision.effectiveDate}
+														</button>
+														{ expandedRevision === revision.effectiveDate && (
+															<ul>
+																<li>Balance: ${revision.balance}</li>
+																<li>Payment day: {revision.paymentDay}</li>
+																<li>Minimum payment: ${revision.minimumPayment}</li>
+																<li>Interest rate: {revision.interestRate}%</li>
+																<li>Interest compounding: {revision.interestCompounding}</li>
+															</ul>
+														) }
+													</div>
+												</li>
+											);
+										}) }
+									</ol>
+								</Fragment>
+							) }
+						</div>
+					) }
 					{ isEditFormOpen && (
 						<EditDebtForm debtId={id} handleClose={toggleExpand} />
 					) }

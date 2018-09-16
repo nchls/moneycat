@@ -11,3 +11,34 @@
 .is-inactive {
 	opacity: .75;
 }
+
+.debt-info {
+	border: solid 1px #ccc;
+	padding: .5em;
+	font-size: .85em;
+	.info-header {
+		font-weight: bold;
+	}
+	ul {
+		margin: 0 0 .5em 0;
+	}
+
+	.revisions-header {
+		font-weight: bold;
+	}
+	.revision-header {
+		font-weight: bold;
+		background: transparent;
+		display: block;
+		width: 100%;
+		text-align: left;
+		color: #4a4a4a;
+		padding: .3em 0;
+		border: 0;
+		cursor: pointer;
+	}
+	ol li {
+		list-style: none;
+	}
+}
+
