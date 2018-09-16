@@ -33,6 +33,7 @@
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "formik": "^1.3.0",
     "moment": "^2.22.2",
+    "nivo-bar": "git://github.com/ebenpack/nivo-bar",
     "node-sass": "^4.9.3",
     "react": "^16.5.1",
     "react-dates": "^18.0.4",

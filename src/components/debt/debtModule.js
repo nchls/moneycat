@@ -66,15 +66,16 @@ const sampleData = {
     "2": {
         "name": "Mortgage",
         "type": "mortgage",
-        "balance": 50000,
+        "balance": 90000,
         "startDate": "2017-07-01",
         "paymentDay": 20,
         "minimumPayment": 1200,
-        "interestRate": 10,
+        "interestRate": 20,
         "interestCompounding": "monthly",
         "id": 2
     }
 };
+
 const initialState = {};
 export const debtReducer = (state = initialState, action) => {
 	let newState;

@@ -1,7 +1,7 @@
 const sampleData = {
     created: "2018-09-16", 
-    extraAmount: 500, 
-    payoffOrder: [2, 1, 0]
+    extraAmount: 900, 
+    payoffOrder: [0, 2, 1]
 };
 
 const initialState = {
