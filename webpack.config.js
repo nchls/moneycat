@@ -42,6 +42,12 @@ module.exports = {
 						'css-loader'
 					]
 				})
+			},
+			{
+				test: /\.png$/,
+				use: [
+					'file-loader'
+				]
 			}
 		]
 	},

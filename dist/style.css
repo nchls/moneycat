@@ -843,10 +843,20 @@
 
 .header-logo a {
   display: block;
-  padding: 1em .8em; }
+  padding: 1em .8em 1em 67px;
+  background-image: url(4000625a9a556fb3fe65e73b19ce709d.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position-x: 6px;
+  background-position-y: bottom; }
 
 .header-logo h1 {
-  font-weight: bold; }
+  font-weight: bold;
+  width: 0;
+  overflow: hidden; }
+  @media (min-width: 540px) {
+    .header-logo h1 {
+      width: auto; } }
 
 .nav-items {
   display: flex; }
