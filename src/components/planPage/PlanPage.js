@@ -123,6 +123,7 @@ const PlanPage = ({
 
 	return (
 		<div className="plan-page">
+			<h2 className="title is-4">Plan</h2>
 			<Formik
 				initialValues={initialValues}
 				validate={validatePlanForm}
@@ -181,7 +182,7 @@ const PlanPage = ({
 										) : (
 											<p>
 												Normally, we'd tell you here in what order you should pay off your
-												debts to save the most money. But there's only so many ways to order
+												debts to save the most money. But there are only so many ways to order
 												a single item!
 											</p>
 										) }

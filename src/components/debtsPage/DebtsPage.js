@@ -37,21 +37,24 @@ class DebtsPageContainer extends React.Component {
 
 const DebtsPage = ({ debts, createDebt, isNewDebtFormShown, showNewDebtForm, hideNewDebtForm }) => {
 	return (
-		<div className="debts-page cards-list is-clearfix">
-			{ Object.entries(debts).map(([id, debt]) => {
-				return (
-					<Debt debt={debt} key={id} />
-				);
-			}) }
-			{ !isNewDebtFormShown ? (
-				<div className="card">
-					<button className="button is-primary" onClick={showNewDebtForm}>
-						Create a debt
-					</button>
-				</div>
-			) : (
-				<CreateDebtForm handleCancel={hideNewDebtForm} />
-			) }
+		<div className="debts-page">
+			<h2 className="title is-4">Debts</h2>
+			<div className="cards-list">
+				{ Object.entries(debts).map(([id, debt]) => {
+					return (
+						<Debt debt={debt} key={id} />
+					);
+				}) }
+				{ !isNewDebtFormShown ? (
+					<div className="card">
+						<button className="button is-primary" onClick={showNewDebtForm}>
+							Create a debt
+						</button>
+					</div>
+				) : (
+					<CreateDebtForm handleCancel={hideNewDebtForm} />
+				) }
+			</div>
 		</div>
 	);
 }

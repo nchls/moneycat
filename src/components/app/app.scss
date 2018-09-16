@@ -6,7 +6,7 @@ $card-background: #fff;
 $card-margin: 1em;
 
 .app {
-
+	min-height: 100vh;
 }
 
 a:link,
@@ -27,16 +27,17 @@ a:visited {
 
 .cards-list {
 	margin: 0 -1em;
+	display: flex;
+	flex-wrap: wrap;
 }
 .card {
 	background: $card-background;
 	box-shadow: 0 0 .4em rgba(0,0,0,0.3);
 	border-radius: .4em;
 
-	float: left;
 	margin: $card-margin;
 	padding: 1em;
-	min-height: 10em;
+	min-height: 8em;
 
 	width: calc(100% - (#{$card-margin} * 2));
 	@media (min-width: 600px) {
