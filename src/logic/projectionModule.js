@@ -2,7 +2,7 @@ const initialState = {
 	isProcessing: false,
 	payoffDates: {},
     ledger: {},
-    squishedLedger: {},
+    squishedLedger: [],
 };
 
 export const projectionReducer = (state = initialState, action) => {

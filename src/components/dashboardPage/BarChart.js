@@ -82,6 +82,7 @@ const BarChart = ({ data, keys }) => {
             "legendPosition": "middle",
             "legendOffset": -40
         }}
+        enableLabel={false}
         labelSkipWidth={12}
         labelSkipHeight={12}
         labelTextColor="inherit:darker(1.6)"

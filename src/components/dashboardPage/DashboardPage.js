@@ -164,13 +164,15 @@ const data = {
 
 const DashboardPage = ({ squishedLedger }) => {
     const allDebts = {};
-    squishedLedger.forEach(entry => {
-        Object.keys(entry).forEach(debt => {
-            if (debt !== '__time__') {
-                allDebts[debt] = true;
-            }
+    if (squishedLedger) {
+        squishedLedger.forEach(entry => {
+            Object.keys(entry).forEach(debt => {
+                if (debt !== '__time__') {
+                    allDebts[debt] = true;
+                }
+            })
         })
-    })
+    }
 	
 	// N.B. BarChart's parent component must have a height defined, else it won't render ಠ_ಠ
 	// N.B. Nivo sucks at making legends. It only looks at the first data item to make the legend...
