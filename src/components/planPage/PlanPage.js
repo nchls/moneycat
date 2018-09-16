@@ -61,11 +61,11 @@ const PlanPage = ({
 
 	if (Object.values(debts).length === 0) {
 		return (
-			<div className="no-debts">
+			<div className="plan-page no-debts">
 				<p>It looks like you haven't created any debts yet. Congratulations!</p>
 				<p>
-					If, one day, you do acquire a debt you'd like to track, head on over to the
-					<Link to="/debts">debts page</Link>, add it there, and come on back here.
+					If, one day, you do acquire a debt you'd like to track, head on over to
+					the <Link to={`${urlRoot}/debts`}>debts page</Link>, add it there, and come on back this way.
 				</p>
 			</div>
 		);
