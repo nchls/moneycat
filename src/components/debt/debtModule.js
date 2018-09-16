@@ -40,6 +40,41 @@ export const getNewDebtId = (debts) => {
 	return 0;
 };
 
+const sampleData = {
+    "0": {
+        "name": "Student Loan",
+        "type": "student-loan",
+        "balance": 50000,
+        "startDate": "2017-07-01",
+        "paymentDay": 15,
+        "minimumPayment": 300,
+        "interestRate": 5,
+        "interestCompounding": "monthly",
+        "id": 0
+    },
+    "1": {
+        "name": "Car Payment",
+        "type": "auto-loan",
+        "balance": 20000,
+        "startDate": "2017-07-01",
+        "paymentDay": 28,
+        "minimumPayment": 200,
+        "interestRate": 7,
+        "interestCompounding": "monthly",
+        "id": 1
+    },
+    "2": {
+        "name": "Mortgage",
+        "type": "mortgage",
+        "balance": 50000,
+        "startDate": "2017-07-01",
+        "paymentDay": 20,
+        "minimumPayment": 1200,
+        "interestRate": 10,
+        "interestCompounding": "monthly",
+        "id": 2
+    }
+};
 const initialState = {};
 export const debtReducer = (state = initialState, action) => {
 	let newState;
