@@ -4,6 +4,7 @@ import moment from 'moment';
 
 import ProjectedField from '../../primitives/ProjectedField';
 import EditDebtForm from './EditDebtForm';
+import ReviseDebtForm from './ReviseDebtForm';
 
 
 class DebtContainer extends React.Component {
@@ -105,7 +106,7 @@ const Debt = (props) => {
 						<EditDebtForm debtId={id} handleClose={toggleExpand} />
 					) }
 					{ isReviseFormOpen && (
-						<p>Revise Form</p>
+						<ReviseDebtForm debtId={id} handleClose={toggleExpand} />
 					) }
 					<div className="buttons is-right">
 						{ !(isEditFormOpen || isReviseFormOpen) && (

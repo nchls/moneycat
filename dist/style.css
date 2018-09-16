@@ -896,8 +896,11 @@ a:visited {
 .debts-page {
   padding: 1em; }
 
+.page-info p {
+  margin: .5em 0; }
+
 .is-inactive {
-  opacity: .7; }
+  opacity: .75; }
 .plan-page {
   padding: 1em; }
   .plan-page p {

@@ -1,6 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
+import { urlRoot } from '../app/App';
 import './debtsPage.scss';
 import Debt from '../debt/Debt';
 import { createDebt } from '../debt/debtModule';
@@ -39,6 +41,18 @@ const DebtsPage = ({ debts, projection, plan, createDebt, isNewDebtFormShown, sh
 	return (
 		<div className="debts-page">
 			<h2 className="title is-4">Debts</h2>
+			<div className="page-info">
+				<p>
+					Here is where you can add and manage your debts. If you need to modify a debt on a certain
+					effective date, such as a change in minimum payment, use the "Revise" button. Other properties
+					like the debt's name can be edited with the "Edit" button.
+				</p>
+				{ !plan.extraAmount && (
+					<p>
+						When you're done adding debts, head over to <Link to={`${urlRoot}/plan`}>the plan page</Link>.
+					</p>
+				) }
+			</div>
 			<div className="cards-list">
 				{ Object.entries(debts).map(([id, debt]) => {
 					return (
