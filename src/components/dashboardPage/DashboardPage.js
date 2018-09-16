@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
 
@@ -27,7 +27,7 @@ const DashboardPage = ({ squishedLedger, plan, projection, debts }) => {
 	const payments = Object.entries(projection.ledger).reduce((accumulator, [ymd, entry]) => {
 		if (ymd >= paymentsWindowStart && ymd <= paymentsWindowEnd) {
 			Object.entries(entry).forEach(([debtId, debtEntry]) => {
-				if (debtEntry.payment !== '0.00') {
+				if (debtEntry.payment !== '0.00' && debtEntry.payment !== undefined) {
 					accumulator.push({
 						ymd: ymd,
 						debtId: parseInt(debtId),
@@ -68,23 +68,39 @@ const DashboardPage = ({ squishedLedger, plan, projection, debts }) => {
 									height={400}
 								/>
 							</div>
-							{ payments.length > 0 && (
-								<div className="dashboard-payments">
-									<h3 className="title is-5">Payments</h3>
-									<h4 className="subtitle is-6">Recent and upcoming</h4>
+							<div className="dashboard-payments">
+								{ payments.length > 0 && (
+									<Fragment>
+										<h3 className="title is-5">Payments</h3>
+										<h4 className="subtitle is-6">Recent and upcoming</h4>
 
-									<ol>
-										{ payments.map((payment) => {
-											const debt = Object.values(debts).find((debt) => debt.id === payment.debtId);
-											return (
-												<li key={ payment.ymd + debt.name }>
-													{ payment.ymd }: Pay ${ payment.payment } to { debt.name }
-												</li>
-											);
-										}) }
-									</ol>
-								</div>
-							) }
+										<ol>
+											{ payments.map((payment) => {
+												const debt = Object.values(debts).find((debt) => debt.id === payment.debtId);
+												const dateString = moment(payment.ymd, 'YYYY-MM-DD').format('MMM D');
+												return (
+													<li key={ payment.ymd + debt.name }>
+														{ dateString }: Pay ${ payment.payment } to { debt.name }
+													</li>
+												);
+											}) }
+										</ol>
+									</Fragment>
+								) }
+
+								<h3 className="title is-5">Projected payoff dates</h3>
+								<ul>
+									{ Object.entries(projection.payoffDates).map(([debtId, ymd]) => {
+										const debt = Object.values(debts).find((debt) => debt.id === parseInt(debtId));
+										const dateString = moment(ymd, 'YYYY-MM-DD').format('MMMM Do, YYYY');
+										return (
+											<li key={ debt.name }>
+												{ debt.name }: { dateString }
+											</li>
+										);
+									}) }
+								</ul>
+							</div>
 						</div>
 					</div>
 				)

@@ -919,6 +919,9 @@ a:visited {
 
 .dashboard-payments li {
   list-style: none; }
+
+.dashboard-payments h3 {
+  margin-top: 2em; }
 .debts-page {
   padding: 1em; }
 
@@ -2159,10 +2162,10 @@ a.box:active {
   box-shadow: inset 0 1px 2px rgba(10, 10, 10, 0.2), 0 0 0 1px #2A5A2B; }
 
 .button {
-  background-color: white;
-  border-color: #dbdbdb;
+  background-color: #2A5A2B;
+  border-color: #343B29;
   border-width: 1px;
-  color: #363636;
+  color: #FBF6D9;
   cursor: pointer;
   justify-content: center;
   padding-bottom: calc(0.375em - 1px);
