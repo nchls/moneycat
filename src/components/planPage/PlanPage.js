@@ -8,6 +8,7 @@ import './planPage.scss';
 import { setPlanExtraAmount, setPlanPayoffOrder, setPlanCreated } from './planPageModule';
 import { emptyValidator } from '../../utility/validation';
 import { orderDebtsForPayoff } from '../../utility/projection';
+import ProjectedField from '../../primitives/ProjectedField';
 
 const planFormValidation = {
 	extraAmount: [ emptyValidator ]
@@ -46,6 +47,7 @@ class PlanPageContainer extends React.Component {
 const PlanPage = ({
 	plan,
 	debts,
+	projection,
 	setPlanExtraAmount,
 	setPlanPayoffOrder,
 	setPlanCreated,
@@ -88,6 +90,14 @@ const PlanPage = ({
 		return accumulator;
 	}, 0);
 
+	const planProjectedCompletionYMD = Object.values(projection.payoffDates).reduce((accumulator, ymd) => {
+		if (ymd > accumulator) {
+			accumulator = ymd;
+		}
+		return accumulator;
+	}, '1980-01-01');
+	const planProjectedCompletionDate = moment(planProjectedCompletionYMD, 'YYYY-MM-DD');
+
 	return (
 		<div className="plan-page">
 			<Formik
@@ -122,7 +132,7 @@ const PlanPage = ({
 										step: 0.01
 									}}
 									wrapperProps={{
-										label: 'How much extra money can you put toward your debts?'
+										label: 'How much extra money can you put toward your debts per month?'
 									}}
 								/>
 
@@ -157,7 +167,11 @@ const PlanPage = ({
 											<button className="button is-primary" type="submit">Next</button>
 										</div>
 									) : (
-										<p>With this plan your debts will be paid off x months sooner, on *date*, and you will have saved $*amount* in interest.</p>
+										<p>
+											With this plan your debts will be paid off x months sooner,
+											on <ProjectedField data={planProjectedCompletionDate.format('MMMM Do YYYY')} />, and
+											you will have saved $*amount* in interest.
+										</p>
 									) }
 								</Fragment>
 							) }
@@ -194,7 +208,8 @@ const validatePlanForm = (values) => {
 const mapStateToProps = (state) => {
 	return {
 		debts: state.debts,
-		plan: state.plan
+		plan: state.plan,
+		projection: state.projection
 	};
 };
 

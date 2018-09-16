@@ -17,6 +17,9 @@ import PlanPage from '../planPage/PlanPage';
 export const urlRoot = '/reactriot2018-moneycat';
 
 const MONEYCAT_VAULT_KEY = 'moneycat-vault';
+const EXCLUDE_BRANCHES_FROM_LOCALSTORAGE = [
+	'projection'
+];
 
 // Middleware for putting the redux store into local storage.
 // pass an array of actions to listen for, or don't and just store on every action
@@ -24,9 +27,17 @@ const createLocalStorageMiddleware = storeActions => store => next => action => 
 	let result = next(action);
 	if (window.localStorage) {
 		if ((storeActions && storeActions.find(action.type)) || !storeActions) {
+			const state = store.getState();
+			const stateToSave = Object.keys(state).reduce((accumulator, branch) => {
+				if (!EXCLUDE_BRANCHES_FROM_LOCALSTORAGE.includes(branch)) {
+					accumulator[branch] = state[branch];
+				}
+				return accumulator;
+			}, {});
+
 			try {
 				// Maybe this could fail for some reason, I don't know
-				window.localStorage.setItem(MONEYCAT_VAULT_KEY, JSON.stringify(store.getState()));
+				window.localStorage.setItem(MONEYCAT_VAULT_KEY, JSON.stringify(stateToSave));
 			} catch (e) { }
 		}
 	}

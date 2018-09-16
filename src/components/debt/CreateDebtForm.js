@@ -11,6 +11,7 @@ const debtFormValidation = {
 	type: [ emptyValidator ],
 	balance: [ emptyValidator ],
 	startDate: [ emptyValidator ],
+	paymentDay: [ emptyValidator ],
 	minimumPayment: [ emptyValidator ],
 	interestRate: [ emptyValidator ],
 	interestCompounding: [ emptyValidator ]
@@ -22,6 +23,7 @@ const CreateDebtForm = ({ handleCancel, createDebt }) => {
 		type: DEBT_TYPES[0].slug,
 		balance: '',
 		startDate: '',
+		paymentDay: '',
 		minimumPayment: '',
 		interestRate: '',
 		interestCompounding: COMPOUNDING_TYPES[0].slug
@@ -89,14 +91,28 @@ const CreateDebtForm = ({ handleCancel, createDebt }) => {
 								id="startDate"
 								label="Start date"
 								helpText={`
-									To be specific, this is the date on which the debt begins to accrue interest.
-									Or it can be any date on which you want to start tracking progress, so long as you set
+									To be specific, this is the date on which the debt begins to accrue interest. Or it
+									can be any date on which you want to start tracking progress, so long as you set
 									the starting balance to what it was on this date.
 								`}
 								error={errors.startDate}
 								isTouched={touched.startDate}
 								setFieldValue={setFieldValue}
 								setFieldTouched={setFieldTouched}
+							/>
+							<Field
+								name="paymentDay"
+								component={InputField}
+								fieldProps={{
+									type: 'number',
+									min: 1,
+									max: 28,
+									step: 1
+								}}
+								wrapperProps={{
+									label: 'Payment day',
+									helpText: 'The day of the month on which payments are due'
+								}}
 							/>
 							<Field
 								name="minimumPayment"

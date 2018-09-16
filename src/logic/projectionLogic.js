@@ -31,32 +31,37 @@ const projectionLogic = createLogic({
 	latest: true,
 	process({ getState, action }, dispatch, done) {
 		const state = getState();
-		const task = {
-			taskName: 'GENERATE_PROJECTION',
-			data: {
-				debts: state.debts,
-				debtRevisions: state.debtRevisions,
-				manualPayments: state.manualPayments,
-				plan: state.plan,
-				planRevisions: state.planRevisions
-			}
-		};
 
-		const taskPromise = new Promise((resolve, reject) => {
-			workerTasks[workerTaskId] = {
-				resolve: resolve,
-				reject: reject
+		if (state.plan.extraAmount && state.plan.payoffOrder.length > 0) {
+			const task = {
+				taskName: 'GENERATE_PROJECTION',
+				data: {
+					// TODO: remove fallbacks
+					debts: state.debts,
+					debtRevisions: state.debtRevisions || [],
+					manualPayments: state.manualPayments || {},
+					plan: state.plan,
+					planRevisions: state.planRevisions || []
+				}
 			};
-		});
-		worker.postMessage({id: workerTaskId, task: task});
-		workerTaskId++;
 
-		dispatch(setProjectionProcessing(true));
-		taskPromise.then((output) => {
-			dispatch(updatePayoffDates(output.payoffDates));
-			dispatch(updateLedger(output.ledger));
-			dispatch(setProjectionProcessing(false));
-		});
+			const taskPromise = new Promise((resolve, reject) => {
+				workerTasks[workerTaskId] = {
+					resolve: resolve,
+					reject: reject
+				};
+			});
+			worker.postMessage({id: workerTaskId, task: task});
+			workerTaskId++;
+
+			dispatch(setProjectionProcessing(true));
+			taskPromise.then((output) => {
+				dispatch(updatePayoffDates(output.payoffDates));
+				dispatch(updateLedger(output.ledger));
+				dispatch(setProjectionProcessing(false));
+				done();
+			});
+		}
 	}
 });
 

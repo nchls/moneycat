@@ -9,6 +9,13 @@ $card-margin: 1em;
 
 }
 
+.field-processing {
+	display: inline-block;
+	padding: 0 .2em;
+	border-radius: .3em;
+	background: #bbb;
+}
+
 .cards-list {
 	margin: 0 -1em;
 }
