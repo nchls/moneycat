@@ -196,9 +196,7 @@ export const squishLedger = (data, debtInfo) => {
 			dataObj[time] = {};
 		}
 		for (const debt in debts) {
-			if (debt in dataObj[time]) {
-				dataObj[time][debt] += debts[debt];
-			} else {
+			if (!(debt in dataObj[time]) || dateParts[3] === '15') {
 				dataObj[time][debt] = debts[debt];
 			}
 		}

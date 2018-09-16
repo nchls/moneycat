@@ -47,7 +47,7 @@ const sampleData = {
         "balance": 50000,
         "startDate": "2017-07-01",
         "paymentDay": 15,
-        "minimumPayment": 300,
+        "minimumPayment": 800,
         "interestRate": 5,
         "interestCompounding": "monthly",
         "id": 0
@@ -58,7 +58,7 @@ const sampleData = {
         "balance": 20000,
         "startDate": "2017-07-01",
         "paymentDay": 28,
-        "minimumPayment": 200,
+        "minimumPayment": 600,
         "interestRate": 7,
         "interestCompounding": "monthly",
         "id": 1
@@ -66,7 +66,7 @@ const sampleData = {
     "2": {
         "name": "Mortgage",
         "type": "mortgage",
-        "balance": 90000,
+        "balance": 60000,
         "startDate": "2017-07-01",
         "paymentDay": 20,
         "minimumPayment": 1200,
@@ -93,7 +93,10 @@ export const debtReducer = (state = initialState, action) => {
 				[action.debt.id]: {...state[action.debt.id], ...action.debt}
 			};
 			return newState;
-
+        
+        case 'POPULATE_WITH_SAMPLE_DATA':
+            newState = {...sampleData};
+            return newState;
 		default:
 			return state;
 	}
