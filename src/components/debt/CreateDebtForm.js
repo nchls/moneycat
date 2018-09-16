@@ -5,10 +5,10 @@ import { Formik, Field } from 'formik';
 import { DEBT_TYPES, COMPOUNDING_TYPES, createDebt, getNewDebtId } from './debtModule';
 import { setPlanPayoffOrder } from '../planPage/planPageModule';
 import { InputField, SelectField, DateField } from '../../primitives/FormFields';
-import { emptyValidator } from '../../utility/validation';
+import { emptyValidator, debtNameValidator } from '../../utility/validation';
 
 const debtFormValidation = {
-	name: [ emptyValidator ],
+	name: [ emptyValidator, debtNameValidator ],
 	type: [ emptyValidator ],
 	balance: [ emptyValidator ],
 	startDate: [ emptyValidator ],
@@ -46,13 +46,19 @@ const CreateDebtForm = ({ debts, plan, planRevisions, setPlanPayoffOrder, handle
 
 		setSubmitting(false);
 		handleCancel();
-	};
+    };
+    
+    const validationExtras = {
+        name: {
+            existingDebts: debts
+        }
+    };
 
 	return (
 		<div className="card create-debt-form">
 			<Formik
 				initialValues={initialValues}
-				validate={validateCreateDebtForm}
+				validate={(values) => validateCreateDebtForm(values, validationExtras)}
 				onSubmit={onSubmit}
 			>
 				{({
@@ -181,10 +187,10 @@ const CreateDebtForm = ({ debts, plan, planRevisions, setPlanPayoffOrder, handle
 	);
 };
 
-const validateCreateDebtForm = (values) => {
+const validateCreateDebtForm = (values, validationExtras) => {
 	const errors = Object.entries(debtFormValidation).reduce((accumulator, [field, validators]) => {
 		const allResults = validators.reduce((accumulator, validator) => {
-			const result = validator(values[field]);
+			const result = validator(values[field], validationExtras[field]);
 			if (result) {
 				accumulator.push(result);
 			}
