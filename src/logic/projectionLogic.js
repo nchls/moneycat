@@ -88,35 +88,33 @@ const minimumProjectionLogic = createLogic({
 	process({ getState, action }, dispatch, done) {
 		const state = getState();
 
-		if (state.plan.extraAmount) {
-			const task = {
-				taskName: 'GENERATE_MINIMUM_PROJECTION',
-				data: {
-					debts: state.debts,
-					debtRevisions: [],
-					manualPayments: {},
-					plan: {...state.plan, extraAmount: 0},
-					planRevisions: []
-				}
+		const task = {
+			taskName: 'GENERATE_MINIMUM_PROJECTION',
+			data: {
+				debts: state.debts,
+				debtRevisions: [],
+				manualPayments: {},
+				plan: {...state.plan, extraAmount: 0},
+				planRevisions: []
+			}
+		};
+
+		const taskPromise = new Promise((resolve, reject) => {
+			workerTasks[workerTaskId] = {
+				resolve: resolve,
+				reject: reject
 			};
+		});
+		worker.postMessage({id: workerTaskId, task: task});
+		workerTaskId++;
 
-			const taskPromise = new Promise((resolve, reject) => {
-				workerTasks[workerTaskId] = {
-					resolve: resolve,
-					reject: reject
-				};
-			});
-			worker.postMessage({id: workerTaskId, task: task});
-			workerTaskId++;
-
-			dispatch(setProjectionProcessing(true));
-			taskPromise.then((output) => {
-				dispatch(updateMinimumPayoffDate(output.minimumPayoffDate));
-				dispatch(updateMinimumPaymentTotal(output.minimumPaymentTotal));
-				dispatch(setProjectionProcessing(false));
-				done();
-			});
-		}
+		dispatch(setProjectionProcessing(true));
+		taskPromise.then((output) => {
+			dispatch(updateMinimumPayoffDate(output.minimumPayoffDate));
+			dispatch(updateMinimumPaymentTotal(output.minimumPaymentTotal));
+			dispatch(setProjectionProcessing(false));
+			done();
+		});
 	}
 });
 
