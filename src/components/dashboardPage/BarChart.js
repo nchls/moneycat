@@ -24,6 +24,7 @@ const BarChart = ({ data, keys }) => {
     const year = d.getFullYear();
     const month = d.getMonth() + 1;
     const now = `${year}-${month < 10 ? ('0'+month) : month}`
+    const smallTime = window.innerWidth <= 420;
     const markToday = [{
         axis: 'x',
         value: now,
@@ -40,13 +41,38 @@ const BarChart = ({ data, keys }) => {
             tickValues.push(data[i].__time__)
         }
     }
+    const legendsOfTheFall = [];
+    if (!smallTime) {
+        legendsOfTheFall.push({
+            "dataFrom": "keys",
+            "anchor": "bottom-right",
+            "direction": "column",
+            "justify": false,
+            "translateX": 100,
+            "translateY": 0,
+            "itemsSpacing": 2,
+            "itemWidth": 100,
+            "itemHeight": 20,
+            "itemDirection": "left-to-right",
+            "itemOpacity": 0.85,
+            "symbolSize": 20,
+            "effects": [
+                {
+                    "on": "hover",
+                    "style": {
+                        "itemOpacity": 1
+                    }
+                }
+            ]
+        });
+    }
     return <ResponsiveBar
         data={data}
         keys={keys}
         indexBy="__time__"
         margin={{
             "top": 50,
-            "right": 130,
+            "right": smallTime ? 0 : 130,
             "bottom": 130,
             "left": 60
         }}
@@ -102,30 +128,7 @@ const BarChart = ({ data, keys }) => {
         motionStiffness={90}
         motionDamping={15}
         fill={phil}
-        legends={[
-            {
-                "dataFrom": "keys",
-                "anchor": "bottom-right",
-                "direction": "column",
-                "justify": false,
-                "translateX": 100,
-                "translateY": 0,
-                "itemsSpacing": 2,
-                "itemWidth": 100,
-                "itemHeight": 20,
-                "itemDirection": "left-to-right",
-                "itemOpacity": 0.85,
-                "symbolSize": 20,
-                "effects": [
-                    {
-                        "on": "hover",
-                        "style": {
-                            "itemOpacity": 1
-                        }
-                    }
-                ]
-            }
-        ]}
+        legends={legendsOfTheFall}
     />;
 };
 
