@@ -20,7 +20,7 @@ onmessage = (evt) => {
 			}, 0);
 			return accumulator;
         }, 0);
-        
+
         // Squish the ledger for ease of charting
         const squishedLedger = squishLedger(ledger, taskData.debts);
 

@@ -89,6 +89,7 @@ export const generateProjection = ({ debts, debtRevisions, manualPayments, plan,
 				debtState[debt.id].paymentDay = parseInt(debtRevision.paymentDay);
 				debtState[debt.id].minimumPayment = debtRevision.minimumPayment;
 				debtState[debt.id].interestRate = debtRevision.interestRate;
+				debtState[debt.id].interestCompounding = debtRevision.interestCompounding;
 			}
 
 			const interest = debtState[debt.id].balance * ((debtState[debt.id].interestRate / 100) / 365.26);
