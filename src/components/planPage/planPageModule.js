@@ -16,7 +16,7 @@ export const planReducer = (state = initialState, action) => {
             return newState;
 
         case 'SET_PLAN_PAYOFF_ORDER':
-            newState = { ...state, payoffOrder: action.order };
+            newState = { ...state, payoffOrder: action.payoffOrder };
             return newState;
 
         default:
@@ -38,9 +38,9 @@ export const setPlanExtraAmount = (amount) => {
     };
 };
 
-export const setPlanPayoffOrder = (order) => {
+export const setPlanPayoffOrder = (payoffOrder) => {
     return {
-        type: 'SET_PLAN_CREATED',
-        created: order
+        type: 'SET_PLAN_PAYOFF_ORDER',
+        payoffOrder: payoffOrder
     };
 };

@@ -1,12 +1,16 @@
 import React from 'react';
+
 import 'react-dates/initialize';
 import { SingleDatePicker } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
 
+import { SortableContainer, SortableElement, SortableHandle, arrayMove } from 'react-sortable-hoc';
+
+
 const FormField = ({ id, label, helpText, error, isTouched, children }) => {
 	return (
 		<div className="field">
-			<label className="label" htmlFor={id}>{ label }</label>
+			{ label && <label className="label" htmlFor={id}>{ label }</label> }
 			<div className="control">
 				{ children }
 				{ helpText && <div className="help">{ helpText }</div> }
@@ -104,6 +108,60 @@ export class DateField extends React.Component {
 					onDateChange={this.onDateChange}
 					onFocusChange={this.onFocusChange}
 				/>
+			</FormField>
+		);
+	}
+}
+
+const DragHandle = SortableHandle(() => <span className="drag-handle">::</span>);
+
+const SortableItem = SortableElement(({ value }) =>
+	<li className="order-item">
+		<DragHandle />
+		{value}
+	</li>
+);
+
+const SortableList = SortableContainer(({ items }) => {
+	return (
+		<ul className="payoff-order-list">
+			{items.map((value, index) => (
+				<SortableItem key={`item-${index}`} index={index} value={value} />
+			))}
+		</ul>
+	);
+});
+
+export class OrderField extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			items: props.items
+		};
+		this.props.setFieldValue(props.id, props.items); // Formik's callback
+
+		this.onSortEnd = this.onSortEnd.bind(this);
+	}
+
+	onSortEnd({ oldIndex, newIndex }) {
+		this.setState({
+			items: arrayMove(this.state.items, oldIndex, newIndex)
+		});
+		this.props.setFieldValue(this.props.id, this.state.items); // Formik's callback
+	};
+
+	render() {
+		return (
+			<FormField {...this.props}>
+				<input
+					className="input"
+					type="hidden"
+					onChange={this.props.onChange}
+					onBlur={this.props.onBlur}
+					id={this.props.id}
+					value={this.state.items.join(',')}
+				/>
+				<SortableList items={this.state.items} onSortEnd={this.onSortEnd} />
 			</FormField>
 		);
 	}

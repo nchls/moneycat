@@ -1,5 +1,10 @@
 export const orderDebtsForPayoff = (debts) => {
 	return Object.values(debts).sort((a, b) => {
-		return a.interestRate - b.interestRate;
+		const intRateDiff = b.interestRate - a.interestRate;
+		// If the interest rates are the same, go with the smaller balance
+		if (intRateDiff === 0) {
+			return a.balance - b.balance;
+		}
+		return intRateDiff;
 	});
 };

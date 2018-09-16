@@ -1,3 +1,28 @@
 .plan-page {
 	padding: 1em;
+	p {
+		margin: 1em 0;
+	}
+}
+
+.payoff-order-prompt {
+
+}
+
+.payoff-order-list {
+	padding: 1em 0;
+	user-select: none;
+}
+.order-item {
+	padding: 1em;
+	box-shadow: 0 0 .4em rgba(0,0,0,0.3);
+	border: solid 1px #bbb;
+	background: #fff;
+	list-style: none;
+	cursor: move;
+}
+.drag-handle {
+	display: inline-block;
+	padding: 0 1em 0 0;
+	color: #777;
 }
