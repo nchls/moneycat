@@ -3,6 +3,7 @@ import { createLogic } from 'redux-logic';
 import {
 	setProjectionProcessing,
 	updateLedger,
+	updateSquishedLedger,
 	updatePayoffDates,
 	updatePaymentTotal,
 	updateMinimumPayoffDate,
@@ -65,7 +66,8 @@ const projectionLogic = createLogic({
 			dispatch(setProjectionProcessing(true));
 			taskPromise.then((output) => {
 				dispatch(updatePayoffDates(output.payoffDates));
-				dispatch(updateLedger(output.ledger));
+                dispatch(updateLedger(output.ledger));
+                dispatch(updateSquishedLedger(output.squishedLedger));
 				dispatch(updatePaymentTotal(output.paymentTotal));
 				dispatch(setProjectionProcessing(false));
 				done();

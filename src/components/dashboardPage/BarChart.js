@@ -32,7 +32,7 @@ const BarChart = ({ data, keys }) => {
     return <ResponsiveBar
         data={data}
         keys={keys}
-        indexBy="time"
+        indexBy="__time__"
         margin={{
             "top": 50,
             "right": 130,

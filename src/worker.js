@@ -1,6 +1,6 @@
 import "@babel/polyfill";
 
-import { generateProjection } from './utility/projection';
+import { generateProjection, squishLedger } from './utility/projection';
 
 
 onmessage = (evt) => {
@@ -19,12 +19,16 @@ onmessage = (evt) => {
 				return accumulator;
 			}, 0);
 			return accumulator;
-		}, 0);
+        }, 0);
+        
+        // Squish the ledger for ease of charting
+        const squishedLedger = squishLedger(ledger);
 
 		postMessage({
 			id: id,
 			output: {
-				ledger: ledger,
+                ledger: ledger,
+                squishedLedger: squishedLedger,
 				payoffDates: payoffDates,
 				paymentTotal: paymentTotal.toFixed(2)
 			}

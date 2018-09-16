@@ -1,7 +1,8 @@
 const initialState = {
 	isProcessing: false,
 	payoffDates: {},
-	ledger: {}
+    ledger: {},
+    squishedLedger: {},
 };
 
 export const projectionReducer = (state = initialState, action) => {
@@ -17,7 +18,11 @@ export const projectionReducer = (state = initialState, action) => {
 
 		case 'UPDATE_LEDGER':
 			newState = { ...state, ledger: action.ledger };
-			return newState;
+            return newState;
+            
+        case 'UPDATE_SQUISHED_LEDGER':
+            newState = { ...state, squishedLedger: action.squishedLedger };
+            return newState;
 
 		case 'UPDATE_PAYMENT_TOTAL':
 			newState = { ...state, paymentTotal: action.paymentTotal };
@@ -54,6 +59,13 @@ export const updateLedger = (ledger) => {
 	return {
 		type: 'UPDATE_LEDGER',
 		ledger: ledger
+	};
+};
+
+export const updateSquishedLedger = (squishedLedger) => {
+	return {
+		type: 'UPDATE_SQUISHED_LEDGER',
+		squishedLedger: squishedLedger
 	};
 };
 

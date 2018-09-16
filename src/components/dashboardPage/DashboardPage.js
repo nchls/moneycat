@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import BarChart from './BarChart';
 import Spinner from '../../primitives/Spinner';
 
@@ -161,37 +162,16 @@ const data = {
 	}
 };
 
-const DashboardPage = props => {
-	// TODO: Pull data from redux store
-	// TODO: This is bonkers. Definitely going over this data more than necessary.
-	const allDebts = {};
-	const dataObj = {};
-	Object.keys(data).sort().map(t => {
-		// This code is shitty. The overall idea is to transform and squash the ledger by
-		// turning it into an array of objects, grouped (and indexed) by month, containing all of
-		// the debt balances for that month. It also gathers all of the debt ids in the ledger.
-		// All of this to get it onto a state to send to the chart
-		const debts = {};
-		Object.keys(data[t]).forEach(d => allDebts[d] = true);
-		Object.keys(data[t]).forEach(d => debts[d] = data[t][d].principalBalance);
-		const dateParts = t.match(/(\d{4})-(\d{2})-(\d{2})/);
-		const time = `${dateParts[1]}-${dateParts[2]}`;
-		if (!(time in dataObj)) {
-			dataObj[time] = {};
-		}
-		for (const debt in debts) {
-			if (debt in dataObj[time]) {
-				dataObj[time][debt] += debts[debt];
-			} else {
-				dataObj[time][debt] = debts[debt];
-			}
-		}
-	});
-	const dataArray = Object.keys(dataObj).sort().map(t => ({
-		time: t,
-		...dataObj[t]
-	}));
-
+const DashboardPage = ({ squishedLedger }) => {
+    const allDebts = {};
+    squishedLedger.forEach(entry => {
+        Object.keys(entry).forEach(debt => {
+            if (debt !== '__time__') {
+                allDebts[debt] = true;
+            }
+        })
+    })
+	
 	// N.B. BarChart's parent component must have a height defined, else it won't render ಠ_ಠ
 	// N.B. Nivo sucks at making legends. It only looks at the first data item to make the legend...
 	//      And even then, it doesn't consider items that are too small, so you can't just push all
@@ -204,7 +184,7 @@ const DashboardPage = props => {
 			<div className="dashboard-page" style={{ height: "500px" }}>
 				<h2 className="title is-4">Dashboard</h2>
 				<BarChart
-					data={dataArray}
+					data={squishedLedger}
 					keys={Object.keys(allDebts)}
 					width={800}
 					height={400}
@@ -214,4 +194,8 @@ const DashboardPage = props => {
 	);
 }
 
-export default DashboardPage;
+const mapStateToProps = state => ({
+    squishedLedger: state.projection.squishedLedger
+});
+
+export default connect(mapStateToProps)(DashboardPage);
