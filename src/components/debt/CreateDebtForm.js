@@ -2,7 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Formik, Field } from 'formik';
 
-import { DEBT_TYPES, COMPOUNDING_TYPES, createDebt } from './debtModule';
+import { DEBT_TYPES, COMPOUNDING_TYPES, createDebt, getNewDebtId } from './debtModule';
+import { setPlanPayoffOrder } from '../planPage/planPageModule';
 import { InputField, SelectField, DateField } from '../../primitives/FormFields';
 import { emptyValidator } from '../../utility/validation';
 
@@ -17,7 +18,7 @@ const debtFormValidation = {
 	interestCompounding: [ emptyValidator ]
 };
 
-const CreateDebtForm = ({ handleCancel, createDebt }) => {
+const CreateDebtForm = ({ debts, plan, planRevisions, setPlanPayoffOrder, handleCancel, createDebt }) => {
 	const initialValues = {
 		name: '',
 		type: DEBT_TYPES[0].slug,
@@ -30,7 +31,19 @@ const CreateDebtForm = ({ handleCancel, createDebt }) => {
 	};
 	const onSubmit = (values, { setSubmitting }) => {
 		values.startDate = values.startDate.format('YYYY-MM-DD');
+
+		// Add the debt
+		const newDebtId = getNewDebtId(debts);
+		values.id = newDebtId;
 		createDebt(values);
+
+		// Add the new debt to all existing plan and plan revisions
+		const payoffOrder = plan.payoffOrder;
+		if (payoffOrder) {
+			payoffOrder.push(newDebtId);
+			setPlanPayoffOrder(payoffOrder);
+		}
+
 		setSubmitting(false);
 		handleCancel();
 	};
@@ -187,13 +200,16 @@ const validateCreateDebtForm = (values) => {
 
 const mapStateToProps = (state) => {
 	return {
-
+		debts: state.debts,
+		plan: state.plan,
+		planRevisions: state.planRevisions
 	};
 };
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		createDebt: (debt) => dispatch(createDebt(debt))
+		createDebt: (debt) => dispatch(createDebt(debt)),
+		setPlanPayoffOrder: (payoffOrder) => dispatch(setPlanPayoffOrder(payoffOrder))
 	};
 };
 

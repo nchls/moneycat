@@ -32,19 +32,22 @@ export const COMPOUNDING_TYPES = [
 	}
 ];
 
+export const getNewDebtId = (debts) => {
+	const debtIds = Object.keys(debts);
+	if (debtIds.length) {
+		return Math.max(...Object.keys(debts).map((id) => parseInt(id))) + 1;
+	}
+	return 0;
+};
+
 const initialState = {};
 export const debtReducer = (state = initialState, action) => {
 	let newState;
 	switch (action.type) {
 		case 'CREATE_DEBT':
-			const newDebtId = (Object.keys(state).length ?
-				(Math.max(...Object.keys(state).map((id) => parseInt(id)))) + 1
-			:
-				0
-			);
 			newState = {
 				...state,
-				[newDebtId]: {...action.debt, id: newDebtId}
+				[action.debt.id]: {...action.debt}
 			};
 			return newState;
 
@@ -59,3 +62,4 @@ export const createDebt = (debt) => {
 		debt: debt
 	};
 };
+

@@ -7,7 +7,7 @@ import { createLogicMiddleware } from 'redux-logic';
 import './app.scss';
 
 import { appReducer, startup } from './appModule';
-import projectionLogic from '../../logic/projectionLogic';
+import projectionLogics from '../../logic/projectionLogic';
 import Header from '../header/Header';
 import DashboardPage from '../dashboardPage/DashboardPage';
 import DebtsPage from '../debtsPage/DebtsPage';
@@ -54,7 +54,7 @@ const getStoreFromLocalStorage = () => {
 	return null;
 };
 
-const logicMiddleware = createLogicMiddleware(projectionLogic);
+const logicMiddleware = createLogicMiddleware(projectionLogics);
 
 const middlewares = [createLocalStorageMiddleware(), logicMiddleware];
 

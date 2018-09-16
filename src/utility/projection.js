@@ -107,13 +107,15 @@ export const generateProjection = ({ debts, debtRevisions, manualPayments, plan,
 				if (debtState[debt.id].accruedInterest < paymentAmount) {
 					paymentAmount -= debtState[debt.id].accruedInterest;
 					debtState[debt.id].accruedInterest = 0;
+				} else {
+					debtState[debt.id].accruedInterest -= paymentAmount;
+					paymentAmount = 0;
 				}
-				if (debtState[debt.id].balance < paymentAmount) {
+				if (debtState[debt.id].balance <= paymentAmount) {
 					paymentAmount -= debtState[debt.id].balance;
 					debtState[debt.id].balance = 0
 					debtsPaidOffCount++;
 					payoffDates[debt.id] = ymd;
-					pocketChange = paymentAmount;
 				} else {
 					debtState[debt.id].balance -= paymentAmount;
 				}
@@ -138,7 +140,7 @@ export const generateProjection = ({ debts, debtRevisions, manualPayments, plan,
 						paymentAmount = 0;
 					}
 
-					if (debtState[debt.id].balance < paymentAmount) {
+					if (debtState[debt.id].balance <= paymentAmount) {
 						paymentToThisDebt += debtState[debt.id].balance;
 						paymentAmount -= debtState[debt.id].balance;
 						debtState[debt.id].balance = 0

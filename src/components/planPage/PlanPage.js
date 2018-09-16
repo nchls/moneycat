@@ -63,6 +63,9 @@ const PlanPage = ({
 		payoffOrder: plan.payoffOrder
 	};
 	const onSubmit = (values) => {
+		if (!values.payoffOrder) {
+			return false;
+		}
 		const payoffOrder = values.payoffOrder.map((debtName) => {
 			// The user has not reordered the debts, so we can just return the ID
 			if (typeof debtName === 'number') {
@@ -89,6 +92,10 @@ const PlanPage = ({
 		accumulator += debt.minimumPayment;
 		return accumulator;
 	}, 0);
+	const minimumPayoffDate = moment(projection.minimumPayoffDate, 'YYYY-MM-DD');
+	const minimumPaymentTotal = projection.minimumPaymentTotal;
+
+	const planSavings = (parseFloat(minimumPaymentTotal) - parseFloat(projection.paymentTotal)).toFixed(2);
 
 	const planProjectedCompletionYMD = Object.values(projection.payoffDates).reduce((accumulator, ymd) => {
 		if (ymd > accumulator) {
@@ -97,6 +104,8 @@ const PlanPage = ({
 		return accumulator;
 	}, '1980-01-01');
 	const planProjectedCompletionDate = moment(planProjectedCompletionYMD, 'YYYY-MM-DD');
+
+	const planTimeSavings = moment.duration(planProjectedCompletionDate.diff(minimumPayoffDate)).humanize();
 
 	return (
 		<div className="plan-page">
@@ -117,10 +126,14 @@ const PlanPage = ({
 				}) => {
 					return (
 						<form onSubmit={handleSubmit}>
-							<p className="minimum-payment-projections">{`
-								You are spending $${sumOfMinimumPayments} in minimum payments per month. At this rate,
-								your debts will be fully paid off on *date*, and you will have paid $*amount* in total.
-							`}</p>
+							<p className="minimum-payment-projections">
+								{`
+									You are spending $${sumOfMinimumPayments} in minimum payments per month. At this rate,
+									your debts will be fully paid off on
+								`}
+								<ProjectedField data={minimumPayoffDate.format('MMMM Do YYYY')} />
+								, and you will have paid $<ProjectedField data={minimumPaymentTotal} /> in total.
+							</p>
 							<div className="extra-money-prompt">
 								<Field
 									name="extraAmount"
@@ -136,7 +149,7 @@ const PlanPage = ({
 									}}
 								/>
 
-								{ (!isPlanOrderShown && multipleDebts) && (
+								{ !isPlanOrderShown && (
 									<div className="buttons is-right">
 										<button className="button is-primary" onClick={showPlanOrder}>Next</button>
 									</div>
@@ -144,8 +157,8 @@ const PlanPage = ({
 							</div>
 							{ isPlanOrderShown && (
 								<Fragment>
-									{ multipleDebts && (
-										<div className="payoff-order-prompt">
+									<div className="payoff-order-prompt">
+										<div className={!multipleDebts ? 'single-debt' : ''}>
 											<p>
 												You'll save the most money by paying off your debts in this order: {
 													optimalDebtOrder.map((debt) => debt.name).join(', ')
@@ -161,16 +174,16 @@ const PlanPage = ({
 												setFieldTouched={setFieldTouched}
 											/>
 										</div>
-									) }
+									</div>
 									{ !isPlanProjectionShown ? (
 										<div className="buttons is-right">
 											<button className="button is-primary" type="submit">Next</button>
 										</div>
 									) : (
 										<p>
-											With this plan your debts will be paid off x months sooner,
+											With this plan, your debts will be paid off <ProjectedField data={planTimeSavings} /> sooner,
 											on <ProjectedField data={planProjectedCompletionDate.format('MMMM Do YYYY')} />, and
-											you will have saved $*amount* in interest.
+											you will have saved $<ProjectedField data={planSavings} /> in interest.
 										</p>
 									) }
 								</Fragment>

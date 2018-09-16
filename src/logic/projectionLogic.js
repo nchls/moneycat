@@ -1,6 +1,13 @@
 import { createLogic } from 'redux-logic';
 
-import { setProjectionProcessing, updateLedger, updatePayoffDates } from './projectionModule';
+import {
+	setProjectionProcessing,
+	updateLedger,
+	updatePayoffDates,
+	updatePaymentTotal,
+	updateMinimumPayoffDate,
+	updateMinimumPaymentTotal
+} from './projectionModule';
 
 
 const worker = new Worker('/worker.js');
@@ -58,6 +65,7 @@ const projectionLogic = createLogic({
 			taskPromise.then((output) => {
 				dispatch(updatePayoffDates(output.payoffDates));
 				dispatch(updateLedger(output.ledger));
+				dispatch(updatePaymentTotal(output.paymentTotal));
 				dispatch(setProjectionProcessing(false));
 				done();
 			});
@@ -65,4 +73,50 @@ const projectionLogic = createLogic({
 	}
 });
 
-export default [ projectionLogic ];
+const ACTIONS_TRIGGERING_MINIMUM_PROJECTION = [
+	'STARTUP',
+	'CREATE_DEBT',
+	'REVISE_DEBT',
+	'SET_PLAN_EXTRA_AMOUNT',
+	'SET_PLAN_PAYOFF_ORDER'
+]
+
+const minimumProjectionLogic = createLogic({
+	type: ACTIONS_TRIGGERING_MINIMUM_PROJECTION,
+	latest: true,
+	process({ getState, action }, dispatch, done) {
+		const state = getState();
+
+		if (state.plan.extraAmount) {
+			const task = {
+				taskName: 'GENERATE_MINIMUM_PROJECTION',
+				data: {
+					debts: state.debts,
+					debtRevisions: [],
+					manualPayments: {},
+					plan: {...state.plan, extraAmount: 0},
+					planRevisions: []
+				}
+			};
+
+			const taskPromise = new Promise((resolve, reject) => {
+				workerTasks[workerTaskId] = {
+					resolve: resolve,
+					reject: reject
+				};
+			});
+			worker.postMessage({id: workerTaskId, task: task});
+			workerTaskId++;
+
+			dispatch(setProjectionProcessing(true));
+			taskPromise.then((output) => {
+				dispatch(updateMinimumPayoffDate(output.minimumPayoffDate));
+				dispatch(updateMinimumPaymentTotal(output.minimumPaymentTotal));
+				dispatch(setProjectionProcessing(false));
+				done();
+			});
+		}
+	}
+});
+
+export default [ projectionLogic, minimumProjectionLogic ];

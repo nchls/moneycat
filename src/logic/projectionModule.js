@@ -5,23 +5,35 @@ const initialState = {
 };
 
 export const projectionReducer = (state = initialState, action) => {
-    let newState;
-    switch (action.type) {
-        case 'SET_PROJECTION_PROCESSING':
-            newState = { ...state, isProcessing: action.isProcessing };
-            return newState;
+	let newState;
+	switch (action.type) {
+		case 'SET_PROJECTION_PROCESSING':
+			newState = { ...state, isProcessing: action.isProcessing };
+			return newState;
 
-        case 'UPDATE_PAYOFF_DATES':
-            newState = { ...state, payoffDates: action.payoffDates };
-            return newState;
+		case 'UPDATE_PAYOFF_DATES':
+			newState = { ...state, payoffDates: action.payoffDates };
+			return newState;
 
-        case 'UPDATE_LEDGER':
-            newState = { ...state, ledger: action.ledger };
-            return newState;
+		case 'UPDATE_LEDGER':
+			newState = { ...state, ledger: action.ledger };
+			return newState;
 
-        default:
-            return state;
-    }
+		case 'UPDATE_PAYMENT_TOTAL':
+			newState = { ...state, paymentTotal: action.paymentTotal };
+			return newState;
+
+		case 'UPDATE_MINIMUM_PAYOFF_DATE':
+			newState = { ...state, minimumPayoffDate: action.minimumPayoffDate };
+			return newState;
+
+		case 'UPDATE_MINIMUM_PAYMENT_TOTAL':
+			newState = { ...state, minimumPaymentTotal: action.minimumPaymentTotal };
+			return newState;
+
+		default:
+			return state;
+	}
 };
 
 export const setProjectionProcessing = (isProcessing) => {
@@ -44,3 +56,25 @@ export const updateLedger = (ledger) => {
 		ledger: ledger
 	};
 };
+
+export const updateMinimumPayoffDate = (minimumPayoffDate) => {
+	return {
+		type: 'UPDATE_MINIMUM_PAYOFF_DATE',
+		minimumPayoffDate: minimumPayoffDate
+	};
+};
+
+export const updateMinimumPaymentTotal = (minimumPaymentTotal) => {
+	return {
+		type: 'UPDATE_MINIMUM_PAYMENT_TOTAL',
+		minimumPaymentTotal: minimumPaymentTotal
+	};
+};
+
+export const updatePaymentTotal = (paymentTotal) => {
+	return {
+		type: 'UPDATE_PAYMENT_TOTAL',
+		paymentTotal: paymentTotal
+	};
+};
+

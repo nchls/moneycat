@@ -30,6 +30,7 @@ const Debt = (props) => {
 			type,
 			balance,
 			startDate,
+			paymentDay,
 			minimumPayment,
 			interestRate,
 			interestCompounding
@@ -43,6 +44,7 @@ const Debt = (props) => {
 					<p>Type: { type }</p>
 					<p>Starting balance: { balance }</p>
 					<p>Start date: { startDate }</p>
+					<p>Payment day: { paymentDay }</p>
 					<p>Minimum payment: { minimumPayment }</p>
 					<p>Interest rate: { interestRate }</p>
 					<p>Interest compounding: { interestCompounding }</p>
