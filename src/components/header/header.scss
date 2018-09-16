@@ -27,3 +27,8 @@
 		padding: 1em;
 	}
 }
+
+.header-reset-button {
+    margin: 1em;
+    margin-left: auto; // <- this pushes the reset button to the right side of the screen
+}

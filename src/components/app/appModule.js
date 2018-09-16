@@ -21,3 +21,7 @@ export const startup = () => {
 export const populateWithSampleData = () => ({
     type: 'POPULATE_WITH_SAMPLE_DATA'
 });
+
+export const resetAllData = () => ({
+    type: 'RESET_ALL_DATA'
+});

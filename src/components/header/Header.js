@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import { urlRoot } from '../app/App';
+import Reset from './Reset';
 import './header.scss';
 
 const Header = () => {
@@ -31,7 +32,8 @@ const Header = () => {
 					</li>
 				</ul>
 			</nav>
-		</header>
+            <Reset />
+        </header>
 	);
 };
 

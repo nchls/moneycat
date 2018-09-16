@@ -36,6 +36,10 @@ export const projectionReducer = (state = initialState, action) => {
 			newState = { ...state, minimumPaymentTotal: action.minimumPaymentTotal };
 			return newState;
 
+        case 'RESET_ALL_DATA':
+            newState = { ...initialState };
+            return newState;
+
 		default:
 			return state;
 	}

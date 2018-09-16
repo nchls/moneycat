@@ -24,9 +24,15 @@ export const planReducer = (state = initialState, action) => {
         case 'SET_PLAN_PAYOFF_ORDER':
             newState = { ...state, payoffOrder: action.payoffOrder };
             return newState;
+
         case 'POPULATE_WITH_SAMPLE_DATA':
             newState = {...sampleData};
             return newState;
+
+        case 'RESET_ALL_DATA':
+            newState = {...initialState};
+            return newState;
+            
         default:
             return state;
     }

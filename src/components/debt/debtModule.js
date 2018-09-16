@@ -97,6 +97,11 @@ export const debtReducer = (state = initialState, action) => {
         case 'POPULATE_WITH_SAMPLE_DATA':
             newState = {...sampleData};
             return newState;
+
+        case 'RESET_ALL_DATA':
+            newState = {...initialState};
+            return newState;
+
 		default:
 			return state;
 	}
