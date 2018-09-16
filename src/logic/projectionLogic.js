@@ -10,7 +10,8 @@ import {
 } from './projectionModule';
 
 
-const worker = new Worker('/worker.js');
+const workerPrefix = document.location.hostname.includes('github.io') ? '/reactriot2018-moneycat/dist' : '';
+const worker = new Worker(`${workerPrefix}/worker.js`);
 let workerTaskId = 0;
 const workerTasks = {};
 
