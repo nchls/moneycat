@@ -5,8 +5,10 @@
 $card-background: #fff;
 $card-margin: 1em;
 
-.app {
-	min-height: 86vh;
+.wrap {
+	min-height: 100vh;
+	position: relative;
+	padding-bottom: 10em;
 }
 
 a:link,

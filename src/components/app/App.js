@@ -9,6 +9,7 @@ import './app.scss';
 import { appReducer, startup } from './appModule';
 import projectionLogics from '../../logic/projectionLogic';
 import Header from '../header/Header';
+import Footer from '../footer/Footer';
 import DashboardPage from '../dashboardPage/DashboardPage';
 import DebtsPage from '../debtsPage/DebtsPage';
 import PlanPage from '../planPage/PlanPage';
@@ -107,7 +108,7 @@ class App extends React.Component {
 		}
 
 		return (
-			<div>
+			<div className="wrap">
 				<div className="app">
 					<Header />
 					<Route exact path="/" render={() => (
@@ -117,7 +118,7 @@ class App extends React.Component {
 					<Route path={`${urlRoot}/debts`} component={DebtsPage} />
 					<Route path={`${urlRoot}/plan`} component={PlanPage} />
 				</div>
-				<div id="hackbit-vote-widget"></div>
+				<Footer />
 			</div>
 		);
 	}
