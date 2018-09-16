@@ -147,32 +147,36 @@ const Debt = (props) => {
 									<li>Interest compounding: {interestCompounding}</li>
 								</ul>
 							</div>
-							<div className="revisions-header">Revisions:</div>
-							<ol>
-								{ thisDebtRevisions.map((revision) => {
-									return (
-										<li key={revision.effectiveDate}>
-											<div className="revision-info">
-												<button
-													className="revision-header"
-													onClick={() => toggleRevision(revision.effectiveDate)}
-												>
-													{revision.effectiveDate}
-												</button>
-												{ expandedRevision === revision.effectiveDate && (
-													<ul>
-														<li>Balance: ${revision.balance}</li>
-														<li>Payment day: {revision.paymentDay}</li>
-														<li>Minimum payment: ${revision.minimumPayment}</li>
-														<li>Interest rate: {revision.interestRate}%</li>
-														<li>Interest compounding: {revision.interestCompounding}</li>
-													</ul>
-												) }
-											</div>
-										</li>
-									);
-								}) }
-							</ol>
+							{ thisDebtRevisions.length > 0 && (
+								<Fragment>
+									<div className="revisions-header">Revisions:</div>
+									<ol>
+										{ thisDebtRevisions.map((revision) => {
+											return (
+												<li key={revision.effectiveDate}>
+													<div className="revision-info">
+														<button
+															className="revision-header"
+															onClick={() => toggleRevision(revision.effectiveDate)}
+														>
+															{revision.effectiveDate}
+														</button>
+														{ expandedRevision === revision.effectiveDate && (
+															<ul>
+																<li>Balance: ${revision.balance}</li>
+																<li>Payment day: {revision.paymentDay}</li>
+																<li>Minimum payment: ${revision.minimumPayment}</li>
+																<li>Interest rate: {revision.interestRate}%</li>
+																<li>Interest compounding: {revision.interestCompounding}</li>
+															</ul>
+														) }
+													</div>
+												</li>
+											);
+										}) }
+									</ol>
+								</Fragment>
+							) }
 						</div>
 					) }
 					{ isEditFormOpen && (
