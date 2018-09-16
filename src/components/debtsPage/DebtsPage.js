@@ -37,7 +37,7 @@ class DebtsPageContainer extends React.Component {
 	}
 }
 
-const DebtsPage = ({ debts, projection, plan, createDebt, isNewDebtFormShown, showNewDebtForm, hideNewDebtForm }) => {
+const DebtsPage = ({ debts, debtRevisions, projection, plan, createDebt, isNewDebtFormShown, showNewDebtForm, hideNewDebtForm }) => {
 	return (
 		<div className="debts-page">
 			<h2 className="title is-4">Debts</h2>
@@ -56,7 +56,7 @@ const DebtsPage = ({ debts, projection, plan, createDebt, isNewDebtFormShown, sh
 			<div className="cards-list">
 				{ Object.entries(debts).map(([id, debt]) => {
 					return (
-						<Debt debt={debt} projection={projection} plan={plan} key={id} />
+						<Debt debt={debt} debtRevisions={debtRevisions} projection={projection} plan={plan} key={id} />
 					);
 				}) }
 				{ !isNewDebtFormShown ? (
@@ -76,6 +76,7 @@ const DebtsPage = ({ debts, projection, plan, createDebt, isNewDebtFormShown, sh
 const mapStateToProps = (state) => {
 	return {
 		debts: state.debts,
+		debtRevisions: state.debtRevisions,
 		projection: state.projection,
 		plan: state.plan
 	};
