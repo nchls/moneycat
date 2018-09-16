@@ -2,10 +2,11 @@ import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Formik, Field } from 'formik';
-import { InputField, OrderField } from '../../primitives/FormFields';
 import moment from 'moment';
 
 import './planPage.scss';
+import { urlRoot } from '../app/App';
+import { InputField, OrderField } from '../../primitives/FormFields';
 import { setPlanExtraAmount, setPlanPayoffOrder, setPlanCreated } from './planPageModule';
 import { emptyValidator } from '../../utility/validation';
 import { orderDebtsForPayoff } from '../../utility/projection';
