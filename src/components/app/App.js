@@ -93,7 +93,7 @@ class App extends React.Component {
 	}
 
 	render() {
-		const search = this.props.location.search;
+		const search = document.location.search;
 		if (search.indexOf('/debts') !== -1) {
 			return <Redirect to={`${urlRoot}/debts`} />
 		}
