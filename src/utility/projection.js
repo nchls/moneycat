@@ -177,7 +177,7 @@ export const generateProjection = ({ debts, debtRevisions, manualPayments, plan,
 	};
 };
 
-export const squishLedger = data => {
+export const squishLedger = (data, debtInfo) => {
 	// TODO: This is bonkers. Definitely going over this data more than necessary.
     const allDebts = {};
     const dataObj = {};
@@ -187,8 +187,8 @@ export const squishLedger = data => {
 		// the debt balances for that month. It also gathers all of the debt ids in the ledger.
 		// All of this to get it onto a state to send to the chart
 		const debts = {};
-		Object.keys(data[t]).forEach(d => allDebts[d] = true);
-		Object.keys(data[t]).forEach(d => debts[d] = parseFloat(data[t][d].principalBalance));
+		Object.keys(data[t]).forEach(d => allDebts[debtInfo[d].name] = true);
+		Object.keys(data[t]).forEach(d => debts[debtInfo[d].name] = parseFloat(data[t][d].principalBalance));
 		const dateParts = t.match(/(\d{4})-(\d{2})-(\d{2})/);
 		const time = `${dateParts[1]}-${dateParts[2]}`;
 		if (!(time in dataObj)) {

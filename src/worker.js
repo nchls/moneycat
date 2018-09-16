@@ -22,7 +22,7 @@ onmessage = (evt) => {
         }, 0);
         
         // Squish the ledger for ease of charting
-        const squishedLedger = squishLedger(ledger);
+        const squishedLedger = squishLedger(ledger, taskData.debts);
 
 		postMessage({
 			id: id,
