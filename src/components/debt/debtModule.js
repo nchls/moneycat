@@ -8,17 +8,17 @@ export const DEBT_TYPES = [
 		name: 'Auto loan'
 	},
 	{
-		slug: 'other-loan',
-		name: 'Other loan'
-	},
-	{
 		slug: 'mortgage',
 		name: 'Mortgage'
 	},
 	{
 		slug: 'credit-card',
 		name: 'Credit card'
-	}
+    },
+    {
+		slug: 'other-loan',
+		name: 'Other loan'
+	},
 ];
 
 export const COMPOUNDING_TYPES = [
@@ -38,6 +38,42 @@ export const getNewDebtId = (debts) => {
 		return Math.max(...Object.keys(debts).map((id) => parseInt(id))) + 1;
 	}
 	return 0;
+};
+
+const sampleData = {
+    "0": {
+        "name": "Student Loan",
+        "type": "student-loan",
+        "balance": 50000,
+        "startDate": "2017-07-01",
+        "paymentDay": 15,
+        "minimumPayment": 300,
+        "interestRate": 5,
+        "interestCompounding": "monthly",
+        "id": 0
+    },
+    "1": {
+        "name": "Car Payment",
+        "type": "auto-loan",
+        "balance": 20000,
+        "startDate": "2017-07-01",
+        "paymentDay": 28,
+        "minimumPayment": 200,
+        "interestRate": 7,
+        "interestCompounding": "monthly",
+        "id": 1
+    },
+    "2": {
+        "name": "Mortgage",
+        "type": "mortgage",
+        "balance": 90000,
+        "startDate": "2017-07-01",
+        "paymentDay": 20,
+        "minimumPayment": 1200,
+        "interestRate": 20,
+        "interestCompounding": "monthly",
+        "id": 2
+    }
 };
 
 const initialState = {};

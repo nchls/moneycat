@@ -188,8 +188,8 @@ export const squishLedger = (data, debtInfo) => {
 		// the debt balances for that month. It also gathers all of the debt ids in the ledger.
 		// All of this to get it onto a state to send to the chart
 		const debts = {};
-		Object.keys(data[t]).forEach(d => allDebts[debtInfo[d].name] = true);
-		Object.keys(data[t]).forEach(d => debts[debtInfo[d].name] = parseFloat(data[t][d].principalBalance));
+		Object.keys(data[t]).forEach(d => allDebts[debtInfo[d].name] = 0);
+		Object.keys(data[t]).forEach(d => debts[debtInfo[d].name] = parseInt(data[t][d].principalBalance));
 		const dateParts = t.match(/(\d{4})-(\d{2})-(\d{2})/);
 		const time = `${dateParts[1]}-${dateParts[2]}`;
 		if (!(time in dataObj)) {
@@ -202,11 +202,13 @@ export const squishLedger = (data, debtInfo) => {
 				dataObj[time][debt] = debts[debt];
 			}
 		}
-	});
+    });
 	const dataArray = Object.keys(dataObj).sort().map(t => ({
-		__time__: t,
+        __time__: t,
+        ...allDebts,
 		...dataObj[t]
     }));
+
     return dataArray;
 };
 

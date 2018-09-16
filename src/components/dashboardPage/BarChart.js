@@ -1,5 +1,5 @@
 import React from 'react';
-import { ResponsiveBar } from '@nivo/bar'
+import { ResponsiveBar } from 'nivo-bar'
 
 const BarChart = ({ data, keys }) => {
     // Add some fill stylez.
@@ -70,7 +70,7 @@ const BarChart = ({ data, keys }) => {
             "tickPadding": 5,
             "tickRotation": 90,
             "legend": "",
-            "legendPosition": "middle",
+            "legendPosition": "center",
             "legendOffset": 36
         }}
         axisLeft={{
@@ -79,7 +79,7 @@ const BarChart = ({ data, keys }) => {
             "tickPadding": 5,
             "tickRotation": 0,
             "legend": "",
-            "legendPosition": "middle",
+            "legendPosition": "center",
             "legendOffset": -40
         }}
         enableLabel={false}
@@ -96,7 +96,7 @@ const BarChart = ({ data, keys }) => {
                 "anchor": "bottom-right",
                 "direction": "column",
                 "justify": false,
-                "translateX": 120,
+                "translateX": 100,
                 "translateY": 0,
                 "itemsSpacing": 2,
                 "itemWidth": 100,
