@@ -36,7 +36,7 @@ const BarChart = ({ data, keys }) => {
         margin={{
             "top": 50,
             "right": 130,
-            "bottom": 50,
+            "bottom": 130,
             "left": 60
         }}
         markers={markToday}
@@ -68,8 +68,8 @@ const BarChart = ({ data, keys }) => {
             "orient": "bottom",
             "tickSize": 5,
             "tickPadding": 5,
-            "tickRotation": 0,
-            "legend": "time",
+            "tickRotation": 90,
+            "legend": "",
             "legendPosition": "middle",
             "legendOffset": 36
         }}
@@ -78,7 +78,7 @@ const BarChart = ({ data, keys }) => {
             "tickSize": 5,
             "tickPadding": 5,
             "tickRotation": 0,
-            "legend": "debt",
+            "legend": "",
             "legendPosition": "middle",
             "legendOffset": -40
         }}
