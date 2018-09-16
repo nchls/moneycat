@@ -29,6 +29,16 @@ const BarChart = ({ data, keys }) => {
         value: now,
         lineStyle: {stroke: 'rgba(0, 0, 0, .35)', strokeWidth: 2},
     }];
+    const maximumTicks = 20;
+    const tickSize = data.length > maximumTicks
+        ? Math.floor(data.length / maximumTicks)
+        : 1;
+    const tickValues = []
+    for (let i = 0; i < data.length; i+= tickSize) {
+        if (data[i] && data[i].__time__) {
+            tickValues.push(data[i].__time__)
+        }
+    }
     return <ResponsiveBar
         data={data}
         keys={keys}
@@ -66,12 +76,13 @@ const BarChart = ({ data, keys }) => {
         borderColor="inherit:darker(1.6)"
         axisBottom={{
             "orient": "bottom",
-            "tickSize": 5,
+            "tickSize": 40,
             "tickPadding": 5,
             "tickRotation": 90,
             "legend": "",
             "legendPosition": "center",
-            "legendOffset": 36
+            "legendOffset": 36,
+            "tickValues": tickValues
         }}
         axisLeft={{
             "orient": "left",
