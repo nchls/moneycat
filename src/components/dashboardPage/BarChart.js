@@ -28,6 +28,7 @@ const BarChart = ({ data, keys }) => {
         axis: 'x',
         value: now,
         lineStyle: {stroke: 'rgba(0, 0, 0, .35)', strokeWidth: 2},
+        legend: 'today'
     }];
     const maximumTicks = 20;
     const tickSize = data.length > maximumTicks
