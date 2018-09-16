@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Formik } from 'formik';
+import { Formik, Field } from 'formik';
 
 import { DEBT_TYPES, COMPOUNDING_TYPES, createDebt } from './debtModule';
 import { InputField, SelectField, DateField } from '../../primitives/FormFields';
@@ -18,12 +18,15 @@ const debtFormValidation = {
 
 const CreateDebtForm = ({ handleCancel, createDebt }) => {
 	const initialValues = {
-		type: DEBT_TYPES[0],
-		interestCompounding: COMPOUNDING_TYPES[0]
+		name: '',
+		type: DEBT_TYPES[0].slug,
+		balance: '',
+		startDate: '',
+		minimumPayment: '',
+		interestRate: '',
+		interestCompounding: COMPOUNDING_TYPES[0].slug
 	};
 	const onSubmit = (values, { setSubmitting }) => {
-		values.type = values.type.slug;
-		values.interestCompounding = values.interestCompounding.slug;
 		values.startDate = values.startDate.format('YYYY-MM-DD');
 		createDebt(values);
 		setSubmitting(false);
@@ -50,35 +53,37 @@ const CreateDebtForm = ({ handleCancel, createDebt }) => {
 				}) => {
 					return (
 						<form onSubmit={handleSubmit}>
-							<InputField
-								id="name"
-								type="text"
-								label="Name"
-								helpText="Just for your own reference."
-								error={errors.name}
-								isTouched={touched.name}
-								onChange={handleChange}
-								onBlur={handleBlur}
+							<Field
+								name="name"
+								component={InputField}
+								fieldProps={{
+									type: 'text'
+								}}
+								wrapperProps={{
+									label: 'Name',
+									helpText: 'Just for your own reference.'
+								}}
 							/>
-							<SelectField
-								id="type"
+							<Field
+								name="type"
+								component={SelectField}
 								choices={DEBT_TYPES}
-								label="Type"
-								error={errors.type}
-								isTouched={touched.type}
-								onChange={handleChange}
-								onBlur={handleBlur}
+								wrapperProps={{
+									label: 'Type'
+								}}
 							/>
-							<InputField
-								id="balance"
-								type="number"
-								min={1}
-								max={99999999}
-								label="Starting balance"
-								error={errors.balance}
-								isTouched={touched.balance}
-								onChange={handleChange}
-								onBlur={handleBlur}
+							<Field
+								name="balance"
+								component={InputField}
+								fieldProps={{
+									type: 'number',
+									min: 1,
+									max: 99999999,
+									step: 0.01
+								}}
+								wrapperProps={{
+									label: 'Starting balance'
+								}}
 							/>
 							<DateField
 								id="startDate"
@@ -93,43 +98,44 @@ const CreateDebtForm = ({ handleCancel, createDebt }) => {
 								setFieldValue={setFieldValue}
 								setFieldTouched={setFieldTouched}
 							/>
-							<InputField
-								id="minimumPayment"
-								type="number"
-								min={1}
-								max={99999}
-								label="Minimum payment"
-								error={errors.minimumPayment}
-								isTouched={touched.minimumPayment}
-								onChange={handleChange}
-								onBlur={handleBlur}
+							<Field
+								name="minimumPayment"
+								component={InputField}
+								fieldProps={{
+									type: 'number',
+									min: 1,
+									max: 99999,
+									step: 0.01
+								}}
+								wrapperProps={{
+									label: 'Minimum payment'
+								}}
 							/>
-							<InputField
-								id="interestRate"
-								type="number"
-								min={0.01}
-								max={100}
-								step={0.01}
-								label="Interest rate"
-								error={errors.interestRate}
-								isTouched={touched.interestRate}
-								onChange={handleChange}
-								onBlur={handleBlur}
+							<Field
+								name="interestRate"
+								component={InputField}
+								fieldProps={{
+									type: 'number',
+									min: 0.01,
+									max: 99,
+									step: 0.01
+								}}
+								wrapperProps={{
+									label: 'Interest rate'
+								}}
 							/>
-							<SelectField
-								id="interestCompounding"
+							<Field
+								name="interestCompounding"
+								component={SelectField}
 								choices={COMPOUNDING_TYPES}
-								label="Interest compounding"
-								error={errors.interestCompounding}
-								isTouched={touched.interestCompounding}
-								helpText={`
-									Most debts compound interest monthly. Exceptions include some student loans, where
-									accrued interest is never added back to the principal.
-								`}
-								onChange={handleChange}
-								onBlur={handleBlur}
+								wrapperProps={{
+									label: 'Interest compounding',
+									helpText: `
+										Most debts compound interest monthly. Exceptions include some student loans, where
+										accrued interest is never added back to the principal.
+									`
+								}}
 							/>
-
 							<div className="buttons is-right">
 								<button className="button is-text" disabled={isSubmitting} onClick={handleCancel}>
 									Cancel

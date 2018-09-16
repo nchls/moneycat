@@ -1,4 +1,5 @@
 import React from 'react';
+import { Field } from 'formik';
 
 import 'react-dates/initialize';
 import { SingleDatePicker } from 'react-dates';
@@ -20,36 +21,30 @@ const FormField = ({ id, label, helpText, error, isTouched, children }) => {
 	);
 }
 
-export const InputField = (props) => {
-	const { id, type, label, min, max, step, value, helpText, error, onChange, onBlur } = props;
+export const InputField = ({
+	field,
+	form: { touched, errors },
+	wrapperProps,
+	fieldProps
+}) => {
 	return (
-		<FormField {...props}>
-			<input
-				className="input"
-				onChange={onChange}
-				onBlur={onBlur}
-				id={id}
-				type={type}
-				value={value}
-				min={min}
-				max={max}
-				step={step}
-			/>
+		<FormField {...wrapperProps} isTouched={touched[field.name]} error={errors[field.name]}>
+			<input className="input" {...field} {...fieldProps}/>
 		</FormField>
 	);
 };
 
-export const SelectField = (props) => {
-	const { id, choices, label, helpText, error, onChange, onBlur } = props;
-	choices[0].selected = true;
+export const SelectField = ({
+	field,
+	form: { touched, errors },
+	choices,
+	wrapperProps,
+	fieldProps
+}) => {
 	return (
-		<FormField {...props}>
+		<FormField {...wrapperProps} isTouched={touched[field.name]} error={errors[field.name]}>
 			<div className="select">
-				<select
-					id={id}
-					onChange={onChange}
-					onBlur={onBlur}
-				>
+				<select {...field} {...fieldProps}>
 					{ choices.map((choice) => {
 						return <option key={choice.slug} value={choice.slug}>{ choice.name }</option>;
 					} ) }

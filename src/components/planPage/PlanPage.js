@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
-import { Formik } from 'formik';
+import { Formik, Field } from 'formik';
 import { InputField, OrderField } from '../../primitives/FormFields';
 import moment from 'moment';
 
@@ -112,18 +112,20 @@ const PlanPage = ({
 								your debts will be fully paid off on *date*, and you will have paid $*amount* in total.
 							`}</p>
 							<div className="extra-money-prompt">
-								<InputField
-									id="extraAmount"
-									type="number"
-									min={1}
-									max={999999}
-									value={values.extraAmount}
-									label="How much extra money can you put toward your debts?"
-									error={errors.extraAmount}
-									isTouched={touched.extraAmount}
-									onChange={handleChange}
-									onBlur={handleBlur}
+								<Field
+									name="extraAmount"
+									component={InputField}
+									fieldProps={{
+										type: 'number',
+										min: 0.01,
+										max: 999999,
+										step: 0.01
+									}}
+									wrapperProps={{
+										label: 'How much extra money can you put toward your debts?'
+									}}
 								/>
+
 								{ (!isPlanOrderShown && multipleDebts) && (
 									<div className="buttons is-right">
 										<button className="button is-primary" onClick={showPlanOrder}>Next</button>

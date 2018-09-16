@@ -1,7 +1,7 @@
 const initialState = {
     created: undefined,
     extraAmount: undefined,
-    payoffOrder: []
+    payoffOrder: undefined
 };
 
 export const planReducer = (state = initialState, action) => {
