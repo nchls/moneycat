@@ -58,6 +58,18 @@ const PlanPage = ({
 }) => {
 	const today = moment().format('YYYY-MM-DD');
 
+	if (Object.values(debts).length === 0) {
+		return (
+			<div className="no-debts">
+				<p>It looks like you haven't created any debts yet. Congratulations!</p>
+				<p>
+					If, one day, you do acquire a debt you'd like to track, head on over to the
+					<Link to="/debts">debts page</Link>, add it there, and come on back here.
+				</p>
+			</div>
+		);
+	}
+
 	const initialValues = {
 		extraAmount: plan.extraAmount,
 		payoffOrder: plan.payoffOrder
@@ -158,22 +170,28 @@ const PlanPage = ({
 							{ isPlanOrderShown && (
 								<Fragment>
 									<div className="payoff-order-prompt">
-										<div className={!multipleDebts ? 'single-debt' : ''}>
+										{ multipleDebts ? (
 											<p>
 												You'll save the most money by paying off your debts in this order: {
 													optimalDebtOrder.map((debt) => debt.name).join(', ')
 												}. But you can rearrange them here if you want by dragging and dropping:
 											</p>
-											<OrderField
-												id="payoffOrder"
-												label="Payoff order"
-												items={actualDebtOrder.map((debt) => debt.name)}
-												error={errors.payoffOrder}
-												isTouched={touched.payoffOrder}
-												setFieldValue={setFieldValue}
-												setFieldTouched={setFieldTouched}
-											/>
-										</div>
+										) : (
+											<p>
+												Normally, we'd tell you here in what order you should pay off your
+												debts to save the most money. But there's only so many ways to order
+												a single item!
+											</p>
+										) }
+										<OrderField
+											id="payoffOrder"
+											label="Payoff order"
+											items={actualDebtOrder.map((debt) => debt.name)}
+											error={errors.payoffOrder}
+											isTouched={touched.payoffOrder}
+											setFieldValue={setFieldValue}
+											setFieldTouched={setFieldTouched}
+										/>
 									</div>
 									{ !isPlanProjectionShown ? (
 										<div className="buttons is-right">
