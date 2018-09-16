@@ -9,6 +9,15 @@ $card-margin: 1em;
 
 }
 
+a:link,
+a:visited {
+	text-decoration: underline;
+}
+
+#hackbit-vote-widget {
+	margin-top: 2em;
+}
+
 .field-processing {
 	display: inline-block;
 	padding: 0 .2em;

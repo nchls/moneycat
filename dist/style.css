@@ -829,6 +829,9 @@
   fill: #cacccd
 }.header {
   display: flex; }
+  .header a:link,
+  .header a:visited {
+    text-decoration: none; }
 
 .header-logo a {
   display: block;
@@ -844,6 +847,13 @@
     padding: 1em; }
 *, *:before, *:after {
   box-sizing: border-box; }
+
+a:link,
+a:visited {
+  text-decoration: underline; }
+
+#hackbit-vote-widget {
+  margin-top: 2em; }
 
 .field-processing {
   display: inline-block;

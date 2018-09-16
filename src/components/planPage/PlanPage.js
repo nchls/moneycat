@@ -209,9 +209,16 @@ const PlanPage = ({
 								</Fragment>
 							) }
 							{ isPlanProjectionShown && (
-								<div className="buttons is-centered">
-									<button className="button is-primary" type="submit">Save plan</button>
-								</div>
+								<Fragment>
+									<div className="buttons is-centered">
+										<button className="button is-primary" type="submit">Save plan</button>
+									</div>
+									<p>
+										Everything look good here? When you're ready, head over
+										to <Link to={`${urlRoot}/`}>the Dashboard page</Link> to get a high-level view
+										of your progress.
+									</p>
+								</Fragment>
 							) }
 						</form>
 					);

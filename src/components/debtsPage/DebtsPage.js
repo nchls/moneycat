@@ -37,7 +37,7 @@ class DebtsPageContainer extends React.Component {
 
 const DebtsPage = ({ debts, createDebt, isNewDebtFormShown, showNewDebtForm, hideNewDebtForm }) => {
 	return (
-		<div className="debts-page cards-list">
+		<div className="debts-page cards-list is-clearfix">
 			{ Object.entries(debts).map(([id, debt]) => {
 				return (
 					<Debt debt={debt} key={id} />

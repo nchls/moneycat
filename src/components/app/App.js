@@ -90,6 +90,11 @@ class AppContainer extends React.Component {
 class App extends React.Component {
 	componentDidMount() {
 		store.dispatch(startup());
+		setTimeout(() => {
+			const voteScript = document.createElement('script');
+			voteScript.src = 'https://www.reactriot.com/entries/128-struggle-bus/vote.js';
+			document.body.appendChild(voteScript);
+		}, 100);
 	}
 
 	render() {
@@ -102,19 +107,16 @@ class App extends React.Component {
 		}
 
 		return (
-			<section className="section">
-				<div className="container">
-					<div className="app">
-						<Header />
-						<Route exact path="/" render={() => (
-							<Redirect to={`${urlRoot}/`} />
-						)} />
-						<Route exact path={`${urlRoot}/`} component={DashboardPage} />
-						<Route path={`${urlRoot}/debts`} component={DebtsPage} />
-						<Route path={`${urlRoot}/plan`} component={PlanPage} />
-					</div>
-				</div>
-			</section>
+			<div className="app">
+				<Header />
+				<Route exact path="/" render={() => (
+					<Redirect to={`${urlRoot}/`} />
+				)} />
+				<Route exact path={`${urlRoot}/`} component={DashboardPage} />
+				<Route path={`${urlRoot}/debts`} component={DebtsPage} />
+				<Route path={`${urlRoot}/plan`} component={PlanPage} />
+				<div id="hackbit-vote-widget"></div>
+			</div>
 		);
 	}
 }
