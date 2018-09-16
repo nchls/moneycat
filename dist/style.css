@@ -873,23 +873,31 @@ a:visited {
   background: #fff;
   box-shadow: 0 0 0.4em rgba(0, 0, 0, 0.3);
   border-radius: .4em;
+  cursor: pointer;
   margin: 1em;
   padding: 1em;
   min-height: 8em;
   width: calc(100% - (1em * 2)); }
-  @media (min-width: 600px) {
+  @media (min-width: 640px) {
     .card {
       width: calc(50% - (1em * 2)); } }
-  @media (min-width: 800px) {
+  @media (min-width: 840px) {
     .card {
       width: calc(33.3% - (1em * 2)); } }
-  @media (min-width: 1100px) {
+  @media (min-width: 1140px) {
     .card {
       width: calc(25% - (1em * 2)); } }
+  .card .title {
+    margin: .3em 0; }
+  .card .buttons {
+    padding-top: .6em; }
 .dashboard-page {
   padding: 1em; }
 .debts-page {
   padding: 1em; }
+
+.is-inactive {
+  opacity: .7; }
 .plan-page {
   padding: 1em; }
   .plan-page p {

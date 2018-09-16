@@ -87,14 +87,28 @@ export const debtReducer = (state = initialState, action) => {
 			};
 			return newState;
 
-        default:
-            return state;
-    }
+		case 'EDIT_DEBT':
+			newState = {
+				...state,
+				[action.debt.id]: {...state[action.debt.id], ...action.debt}
+			};
+			return newState;
+
+		default:
+			return state;
+	}
 };
 
 export const createDebt = (debt) => {
 	return {
 		type: 'CREATE_DEBT',
+		debt: debt
+	};
+};
+
+export const editDebt = (debt) => {
+	return {
+		type: 'EDIT_DEBT',
 		debt: debt
 	};
 };
