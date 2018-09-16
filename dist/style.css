@@ -845,6 +845,10 @@
   .nav-items li a {
     display: block;
     padding: 1em; }
+
+.header-reset-button {
+  margin: 1em;
+  margin-left: auto; }
 *, *:before, *:after {
   box-sizing: border-box; }
 
@@ -895,6 +899,26 @@ a:visited {
     padding-top: .6em; }
 .dashboard-page {
   padding: 1em; }
+  .dashboard-page p {
+    margin: .5em 0; }
+
+.dashboard-chart,
+.dashboard-payments {
+  float: left;
+  width: 100%; }
+
+.dashboard-chart {
+  height: 500px; }
+  @media (min-width: 1000px) {
+    .dashboard-chart {
+      width: 66.6%; } }
+
+@media (min-width: 1000px) {
+  .dashboard-payments {
+    width: 33.3%; } }
+
+.dashboard-payments li {
+  list-style: none; }
 .debts-page {
   padding: 1em; }
 

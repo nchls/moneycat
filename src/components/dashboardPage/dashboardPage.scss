@@ -1,3 +1,29 @@
 .dashboard-page {
 	padding: 1em;
+	p {
+		margin: .5em 0;
+	}
+}
+
+.dashboard-chart,
+.dashboard-payments {
+	float: left;
+	width: 100%;
+}
+
+.dashboard-chart {
+	height: 500px;
+
+	@media (min-width: 1000px) {
+		width: 66.6%;
+	}
+}
+
+.dashboard-payments {
+	@media (min-width: 1000px) {
+		width: 33.3%;
+	}
+	li {
+		list-style: none;
+	}
 }
