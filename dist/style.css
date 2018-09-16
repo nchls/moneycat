@@ -828,10 +828,18 @@
   width: 15px;
   fill: #cacccd
 }.header {
-  display: flex; }
+  display: flex;
+  background: #432; }
   .header a:link,
   .header a:visited {
-    text-decoration: none; }
+    text-decoration: none;
+    color: #cba; }
+    .header a:link.is-active,
+    .header a:visited.is-active {
+      box-shadow: inset 0 0 1em rgba(0, 0, 0, 0.5);
+      color: #edc; }
+  .header a:hover {
+    color: #edc; }
 
 .header-logo a {
   display: block;
@@ -847,13 +855,15 @@
     padding: 1em; }
 
 .header-reset-button {
-  margin: 1em;
+  margin: .6em;
   margin-left: auto; }
+  .header-reset-button button:hover {
+    color: #fff; }
 *, *:before, *:after {
   box-sizing: border-box; }
 
 .app {
-  min-height: 100vh; }
+  min-height: 86vh; }
 
 a:link,
 a:visited {

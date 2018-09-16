@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 import { urlRoot } from '../app/App';
 import Reset from './Reset';
@@ -16,19 +16,19 @@ const Header = () => {
 			<nav className="nav">
 				<ul className="nav-items">
 					<li>
-						<Link to={`${urlRoot}/`}>
+						<NavLink to={`${urlRoot}/`} exact activeClassName='is-active'>
 							Dashboard
-						</Link>
+						</NavLink>
 					</li>
 					<li>
-						<Link to={`${urlRoot}/debts`}>
+						<NavLink to={`${urlRoot}/debts`} activeClassName='is-active'>
 							Debts
-						</Link>
+						</NavLink>
 					</li>
 					<li>
-						<Link to={`${urlRoot}/plan`}>
+						<NavLink to={`${urlRoot}/plan`} activeClassName='is-active'>
 							Plan
-						</Link>
+						</NavLink>
 					</li>
 				</ul>
 			</nav>
