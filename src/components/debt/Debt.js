@@ -83,7 +83,7 @@ const Debt = (props) => {
 		todayValues = ledger[todayYMD][id];
 	}
 	const debtBalance = todayValues.principalBalance ? (
-		(parseFloat(todayValues.principalBalance) + parseFloat(todayValues.accruedInterest))
+		(parseFloat(todayValues.principalBalance) + parseFloat(todayValues.accruedInterest)).toFixed(2)
 	) : (
 		0
 	);
