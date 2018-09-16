@@ -28,7 +28,12 @@ export const generateProjection = ({ debts, debtRevisions, manualPayments, plan,
 
 	// Initialize stateful variables
 	let dt = parseDate(startYMD);
-	let payoffOrder = plan.payoffOrder;
+	let payoffOrder;
+	if (plan.payoffOrder) {
+		payoffOrder = plan.payoffOrder;
+	} else {
+		payoffOrder = Object.keys(debts);
+	}
 	let extraAmount = parseFloat(plan.extraAmount);
 	let debtState = Object.values(debts).reduce((accumulator, debt) => {
 		accumulator[debt.id] = {...debt, accruedInterest: 0};
