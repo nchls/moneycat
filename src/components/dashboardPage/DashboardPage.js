@@ -30,6 +30,7 @@ const DashboardPage = ({ squishedLedger, plan, projection, debts }) => {
 				if (debtEntry.payment !== '0.00' && debtEntry.payment !== undefined) {
 					accumulator.push({
 						ymd: ymd,
+						isPast: ymd <= today.format('YYYY-MM-DD'),
 						debtId: parseInt(debtId),
 						...debtEntry
 					});
@@ -39,6 +40,20 @@ const DashboardPage = ({ squishedLedger, plan, projection, debts }) => {
 		return accumulator;
 	}, []);
 	payments.sort((a, b) => {
+		if (a.ymd < b.ymd) {
+			return -1;
+		}
+		return 1;
+	});
+
+	const payoffDates = Object.entries(projection.payoffDates).map(([debtId, ymd]) => {
+		const debt = Object.values(debts).find((debt) => debt.id === parseInt(debtId));
+		return {
+			ymd: ymd,
+			debtName: debt.name
+		};
+	});
+	payoffDates.sort((a, b) => {
 		if (a.ymd < b.ymd) {
 			return -1;
 		}
@@ -80,7 +95,7 @@ const DashboardPage = ({ squishedLedger, plan, projection, debts }) => {
 												const dateString = moment(payment.ymd, 'YYYY-MM-DD').format('MMM D');
 												return (
 													<li key={ payment.ymd + debt.name }>
-														{ dateString }: Pay ${ payment.payment } to { debt.name }
+														{ payment.isPast ? '✔️' : '⬜' } { dateString }: { payment.isPast ? 'Paid' : 'Pay' } ${ payment.payment } to { debt.name }
 													</li>
 												);
 											}) }
@@ -90,12 +105,11 @@ const DashboardPage = ({ squishedLedger, plan, projection, debts }) => {
 
 								<h3 className="title is-5">Projected payoff dates</h3>
 								<ul>
-									{ Object.entries(projection.payoffDates).map(([debtId, ymd]) => {
-										const debt = Object.values(debts).find((debt) => debt.id === parseInt(debtId));
+									{ payoffDates.map(({ ymd, debtName }) => {
 										const dateString = moment(ymd, 'YYYY-MM-DD').format('MMMM Do, YYYY');
 										return (
-											<li key={ debt.name }>
-												{ debt.name }: { dateString }
+											<li key={ debtName }>
+												{ debtName }: { dateString }
 											</li>
 										);
 									}) }
