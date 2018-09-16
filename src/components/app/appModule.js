@@ -17,3 +17,7 @@ export const startup = () => {
         type: 'STARTUP'
     };
 };
+
+export const populateWithSampleData = () => ({
+    type: 'POPULATE_WITH_SAMPLE_DATA'
+});

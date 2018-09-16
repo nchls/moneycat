@@ -1,11 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import BarChart from './BarChart';
-import Spinner from '../../primitives/Spinner';
+import Intro from './Intro';
 
 import './dashboardPage.scss';
 
-const DashboardPage = ({ squishedLedger }) => {
+const DashboardPage = ({ squishedLedger, plan }) => {
     const allDebts = {};
     if (squishedLedger) {
         squishedLedger.forEach(entry => {
@@ -16,6 +16,8 @@ const DashboardPage = ({ squishedLedger }) => {
             })
         })
     }
+
+    const showIntro = (!plan.created) && squishedLedger.length === 0;
 	
 	// N.B. BarChart's parent component must have a height defined, else it won't render ಠ_ಠ
 	// N.B. Nivo sucks at making legends. It only looks at the first data item to make the legend...
@@ -24,23 +26,25 @@ const DashboardPage = ({ squishedLedger }) => {
 	// N.B. This chart isn't really a time series. If you omit a month from the data passed in,
 	//      the chart won't render that month at all
 	return (
-		// The ticket said we need a spinner, so this is ready to go when everything gets wired up
-		<Spinner isLoading={false}>
-			<div className="dashboard-page" style={{ height: "500px" }}>
-				<h2 className="title is-4">Dashboard</h2>
-				<BarChart
-					data={squishedLedger}
-					keys={Object.keys(allDebts)}
-					width={800}
-					height={400}
-				/>
-			</div >
-		</Spinner>
+        showIntro
+        ? <Intro />
+        : (
+            <div className="dashboard-page" style={{ height: "500px" }}>
+                <h2 className="title is-4">Dashboard</h2>
+                <BarChart
+                    data={squishedLedger}
+                    keys={Object.keys(allDebts)}
+                    width={800}
+                    height={400}
+                />
+            </div >
+        )
 	);
 }
 
 const mapStateToProps = state => ({
-    squishedLedger: state.projection.squishedLedger
+    squishedLedger: state.projection.squishedLedger,
+    plan: state.plan
 });
 
 export default connect(mapStateToProps)(DashboardPage);
