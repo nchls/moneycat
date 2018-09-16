@@ -8,10 +8,10 @@ import 'react-dates/lib/css/_datepicker.css';
 import { SortableContainer, SortableElement, SortableHandle, arrayMove } from 'react-sortable-hoc';
 
 
-const FormField = ({ id, label, helpText, error, isTouched, children }) => {
+const FormField = ({ name, label, helpText, error, isTouched, children }) => {
 	return (
 		<div className="field">
-			{ label && <label className="label" htmlFor={id}>{ label }</label> }
+			{ label && <label className="label" htmlFor={`field-${name}`}>{ label }</label> }
 			<div className="control">
 				{ children }
 				{ helpText && <div className="help">{ helpText }</div> }
@@ -28,8 +28,8 @@ export const InputField = ({
 	fieldProps
 }) => {
 	return (
-		<FormField {...wrapperProps} isTouched={touched[field.name]} error={errors[field.name]}>
-			<input className="input" {...field} {...fieldProps}/>
+		<FormField {...wrapperProps} name={field.name} isTouched={touched[field.name]} error={errors[field.name]}>
+			<input className="input" id={`field-${field.name}`} {...field} {...fieldProps}/>
 		</FormField>
 	);
 };
@@ -42,9 +42,9 @@ export const SelectField = ({
 	fieldProps
 }) => {
 	return (
-		<FormField {...wrapperProps} isTouched={touched[field.name]} error={errors[field.name]}>
+		<FormField {...wrapperProps} name={field.name} isTouched={touched[field.name]} error={errors[field.name]}>
 			<div className="select">
-				<select {...field} {...fieldProps}>
+				<select id={`field-${field.name}`} {...field} {...fieldProps}>
 					{ choices.map((choice) => {
 						return <option key={choice.slug} value={choice.slug}>{ choice.name }</option>;
 					} ) }
@@ -147,13 +147,14 @@ export class OrderField extends React.Component {
 
 	render() {
 		return (
-			<FormField {...this.props}>
+			<FormField name={this.props.id} {...this.props}>
 				<input
 					className="input"
 					type="hidden"
 					onChange={this.props.onChange}
 					onBlur={this.props.onBlur}
 					id={this.props.id}
+					name={`field-${this.props.id}`}
 					value={this.state.items.join(',')}
 				/>
 				<SortableList items={this.state.items} onSortEnd={this.onSortEnd} />

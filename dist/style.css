@@ -979,6 +979,13 @@ a:visited {
   padding: 1em; }
   .plan-page p {
     margin: 1em 0; }
+  .plan-page form {
+    max-width: 40em;
+    margin: 0 auto; }
+
+.extra-money-prompt {
+  max-width: 18em;
+  margin: 0 auto; }
 
 .payoff-order-list {
   padding: 1em 0;
