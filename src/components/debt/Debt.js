@@ -14,13 +14,16 @@ class DebtContainer extends React.Component {
 			isExpanded: false,
 			isEditFormOpen: false,
 			isReviseFormOpen: false,
-			expandedRevision: undefined
+			expandedRevision: undefined,
+			isPreparingToDelete: false
 		};
 		this.toggleExpand = this.toggleExpand.bind(this);
 		this.openEditForm = this.openEditForm.bind(this);
 		this.openReviseForm = this.openReviseForm.bind(this);
 		this.toggleRevision = this.toggleRevision.bind(this);
 		this.collapseRevision = this.collapseRevision.bind(this);
+		this.prepareToDelete = this.prepareToDelete.bind(this);
+		this.cancelDelete = this.cancelDelete.bind(this);
 	}
 
 	toggleExpand() {
@@ -52,6 +55,14 @@ class DebtContainer extends React.Component {
 		this.setState({expandedRevision: undefined});
 	}
 
+	prepareToDelete() {
+		this.setState({isPreparingToDelete: true});
+	}
+
+	cancelDelete() {
+		this.setState({isPreparingToDelete: false});
+	}
+
 	render() {
 		return (
 			<Debt
@@ -65,6 +76,9 @@ class DebtContainer extends React.Component {
 				expandedRevision={this.state.expandedRevision}
 				toggleRevision={this.toggleRevision}
 				collapseRevision={this.collapseRevision}
+				isPreparingToDelete={this.state.isPreparingToDelete}
+				prepareToDelete={this.prepareToDelete}
+				cancelDelete={this.cancelDelete}
 			/>
 		);
 	}
@@ -81,6 +95,9 @@ const Debt = (props) => {
 		expandedRevision,
 		toggleRevision,
 		collapseRevision,
+		isPreparingToDelete,
+		prepareToDelete,
+		cancelDelete,
 		debt: {
 			id,
 			name,
@@ -180,7 +197,14 @@ const Debt = (props) => {
 						</div>
 					) }
 					{ isEditFormOpen && (
-						<EditDebtForm debtId={id} handleClose={toggleExpand} />
+						<EditDebtForm
+							debtId={id}
+							handleClose={toggleExpand}
+							planPayoffOrder={plan.payoffOrder}
+							isPreparingToDelete={isPreparingToDelete}
+							prepareToDelete={prepareToDelete}
+							cancelDelete={cancelDelete}
+						/>
 					) }
 					{ isReviseFormOpen && (
 						<ReviseDebtForm debtId={id} handleClose={toggleExpand} />
