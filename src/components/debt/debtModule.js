@@ -8,17 +8,17 @@ export const DEBT_TYPES = [
 		name: 'Auto loan'
 	},
 	{
-		slug: 'other-loan',
-		name: 'Other loan'
-	},
-	{
 		slug: 'mortgage',
 		name: 'Mortgage'
 	},
 	{
 		slug: 'credit-card',
 		name: 'Credit card'
-	}
+    },
+    {
+		slug: 'other-loan',
+		name: 'Other loan'
+	},
 ];
 
 export const COMPOUNDING_TYPES = [
