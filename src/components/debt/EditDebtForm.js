@@ -30,7 +30,7 @@ const EditDebtForm = ({
 	const initialValues = {
 		name: debts[debtId].name,
 		type: debts[debtId].type,
-		startDate: ''
+		startDate: moment(debts[debtId].startDate, 'YYYY-MM-DD')
 	};
 	const onSubmit = (values, { setSubmitting }) => {
 		values.id = debtId;
