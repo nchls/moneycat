@@ -15,7 +15,7 @@ import DebtsPage from '../debtsPage/DebtsPage';
 import PlanPage from '../planPage/PlanPage';
 
 
-export const urlRoot = '/reactriot2018-moneycat';
+export const urlRoot = '';
 
 const MONEYCAT_VAULT_KEY = 'moneycat-vault';
 const EXCLUDE_BRANCHES_FROM_LOCALSTORAGE = [
@@ -91,11 +91,6 @@ class AppContainer extends React.Component {
 class App extends React.Component {
 	componentDidMount() {
 		store.dispatch(startup());
-		setTimeout(() => {
-			const voteScript = document.createElement('script');
-			voteScript.src = 'https://www.reactriot.com/entries/128-struggle-bus/vote.js';
-			document.body.appendChild(voteScript);
-		}, 100);
 	}
 
 	render() {
@@ -111,9 +106,6 @@ class App extends React.Component {
 			<div className="wrap">
 				<div className="app">
 					<Header />
-					<Route exact path="/" render={() => (
-						<Redirect to={`${urlRoot}/`} />
-					)} />
 					<Route exact path={`${urlRoot}/`} component={DashboardPage} />
 					<Route path={`${urlRoot}/debts`} component={DebtsPage} />
 					<Route path={`${urlRoot}/plan`} component={PlanPage} />

@@ -881,9 +881,6 @@ a:link,
 a:visited {
   text-decoration: underline; }
 
-#hackbit-vote-widget {
-  margin-top: 2em; }
-
 .field-processing {
   display: inline-block;
   padding: 0 .2em;
@@ -919,6 +916,9 @@ a:visited {
     margin: .3em 0; }
   .card .buttons {
     padding-top: .6em; }
+
+.ftr {
+  padding-bottom: 1em; }
 .ftr {
   position: absolute;
   bottom: 0;

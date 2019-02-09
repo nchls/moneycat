@@ -10,14 +10,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Hackbit/reactriot2018-moneycat.git"
+    "url": "git+https://github.com/nchls/moneycat.git"
   },
   "author": "Ian Nicholas",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Hackbit/reactriot2018-moneycat/issues"
+    "url": "https://github.com/nchls/moneycat/issues"
   },
-  "homepage": "https://github.com/Hackbit/reactriot2018-moneycat#readme",
+  "homepage": "https://github.com/nchls/moneycat#readme",
   "dependencies": {
     "@babel/cli": "^7.0.0",
     "@babel/core": "^7.0.1",
