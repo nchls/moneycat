@@ -14,6 +14,10 @@ export const debtRevisionReducer = (state = initialState, action) => {
 			}
 			return newState;
 
+        case 'RESET_ALL_DATA':
+            newState = {...initialState};
+            return newState;
+
 		default:
 			return state;
 	}
